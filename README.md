@@ -1,6 +1,8 @@
 # create-webassembly-app
 You should have **[Emscripten](https://emscripten.org/docs/getting_started/downloads.html), [WABT](https://github.com/WebAssembly/wabt), [Node js](https://nodejs.org/en/) and [Make]()** installed on your machine, you can find installations guide for mac below :
 
+<img width="1437" alt="create-webassembly-app" src="https://user-images.githubusercontent.com/54850998/184387075-0d048428-9d83-4d35-b33e-307e6e7fef63.png">
+
 ## **<span style="color:orange">Mac</span> prerequisite installations with <span style="color:orange">Homebrew</span>** :
  If Homebrew is NOT installed you can install from here :
  ```
