@@ -38,6 +38,12 @@ Prefix commands with npx
 
 - **<span style="color:red">example.js</span>** you can import **<span style="color:orange">app-node.js</span>** in this file and use **<span style="color:green">C</span>** functions which are written in **<span style="color:green">source</span>** folder.
 
+## **<span style="color:orange">Magic Command</span>**
+  run all the below commands at the same time
+  ```
+  > npx create-webassembly-app start MyAwesomeWebAssemblyApp
+  ```
+
 ## **<span style="color:orange">Usage(commands)</span>** :
 <span style="color:red">You should do these commands one by one and in order or do the </span> <span style="color:orange">Magic command</span>
 - <span style="color:gray">Create a project</span>
@@ -64,9 +70,4 @@ Prefix commands with npx
 - <span style="color:gray">Run server (serves index.html on port 3000)</span>
   ```
   > npx create-webassembly-app server
-  ```
-## **<span style="color:orange">Magic Command</span>**
-  run all above commands at the same time
-  ```
-  > npx create-webassembly-app start MyAwesomeWebAssemblyApp
   ```
