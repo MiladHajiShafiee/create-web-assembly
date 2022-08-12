@@ -1,6 +1,6 @@
 {
   "name": "create-webassembly-app",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "create webassembly app in other programming languages and run in javascript",
   "main": "index.js",
