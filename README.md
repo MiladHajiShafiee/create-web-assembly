@@ -53,14 +53,14 @@ Prefix commands with npx
   ```
 
 ## **<span style="color:orange">Usage(commands)</span>** :
-<span style="color:red">You should do these commands one by one and in order or do the </span> <span style="color:orange">Magic command</span>
+<span style="color:red">You should run these commands one by one and in order or do the </span> <span style="color:orange">Magic command</span>
 - <span style="color:gray">Build : (builds C files and generate .wasm and .js files)</span>
   ```
   > npx create-webassembly-app build MyAwesomeWebAssemblyApp
   ```
 - <span style="color:gray">Generate wat file : (generates .wat file from .wasm file)</span>
   
-  <span style="color:gray">.wat file is not neccessary for this project just it is text format of .wasm file binary format</span>
+  <span style="color:gray">.wat file is not necessary for this project just it is the text format of .wasm file binary format</span>
   ```
   > npx create-webassembly-app gen-wat MyAwesomeWebAssemblyApp
   ```
