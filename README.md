@@ -40,26 +40,33 @@ Prefix commands with npx
 
 ## **<span style="color:orange">Usage(commands)</span>** :
 <span style="color:red">You should do these commands one by one and in order or do the </span> <span style="color:orange">Magic command</span>
+- <span style="color:gray">Create a project</span>
+  ```
+  > npx create-webassembly-app init MyAwesomeWebAssemblyApp
+  ```
+  ```
+  > cd MyAwesomeWebAssemblyApp
+  ```
 - <span style="color:gray">Build : (builds C files and generate .wasm and .js files)</span>
   ```
-  > create-webassembly-app build yourdesiredname
+  > npx create-webassembly-app build MyAwesomeWebAssemblyApp
   ```
 - <span style="color:gray">Generate wat file : (generates .wat file from .wasm file)</span>
   
   <span style="color:gray">.wat file is not neccessary for this project just it is text format of .wasm file binary format</span>
   ```
-  > create-webassembly-app gen-wat yourdesiredname
+  > npx create-webassembly-app gen-wat MyAwesomeWebAssemblyApp
   ```
 - <span style="color:gray">Run example (runs the codes inside example.js file)</span>
   ```
-  > create-webassembly-app run-js yourdesiredname
+  > npx create-webassembly-app run-js MyAwesomeWebAssemblyApp
   ```
 - <span style="color:gray">Run server (serves index.html on port 3000)</span>
   ```
-  > create-webassembly-app server
+  > npx create-webassembly-app server
   ```
 ## **<span style="color:orange">Magic Command</span>**
   run all above commands at the same time
   ```
-  > create-webassembly-app start yourdesiredname
+  > npx create-webassembly-app start MyAwesomeWebAssemblyApp
   ```
