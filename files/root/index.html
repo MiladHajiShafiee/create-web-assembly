@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebAssembly</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="text">
+      <h1 class="title">WebAssembly</h1>
+      <h1 class="desc">
+        Code in other programming languages and run in Javascript with WebAssembly
+      </h1>
+    </div>
+    <a href="" class="docs">DOCUMENTATION</a>
+
+    <script type="module">
+      import CFunctions from "/app-browser.js";
+
+      const btn = document.getElementById("btn");
+      btn.addEventListener(
+        "click",
+        function () {
+          const a = document.querySelector("#a").value;
+          const b = document.querySelector("#b").value;
+          const sum = CFunctions.add(a, b);
+          document.querySelector("#res").innerHTML = `${sum}`;
+          console.log(sum);
+        },
+        false
+      );
+    </script>
+
+    <div class="math-section">
+      <input type="number" id="a" />
+      <span class="math-sign"> + </span>
+      <input type="number" id="b" />
+      <span class="math-sign" id="btn"> = </span>
+      <span id="res">?</span>
+    </div>
+  </body>
+</html>

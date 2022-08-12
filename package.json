@@ -1,0 +1,31 @@
+{
+  "name": "create-webassembly-app",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "create webassembly app in other programming languages and run in javascript",
+  "main": "index.js",
+  "scripts": {
+    "create-webassembly-app": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiladHajiShafiee/create-web-assembly.git"
+  },
+  "keywords": [
+    "WebAssembly",
+    "webassembly",
+    "create-webassembly-app",
+    "assemblyscript"
+  ],
+  "author": "Milad HajiShafiei",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.4",
+    "chalk": "^5.0.1",
+    "commander": "^9.4.0",
+    "ora": "^6.1.2"
+  },
+  "bin": {
+    "create-webassembly-app": "./index.js"
+  }
+}

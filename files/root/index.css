@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: darkslategrey;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  color: wheat;
+  font-size: 8rem;
+}
+
+.desc {
+  color: pink;
+  margin-top: 1rem;
+}
+
+.docs {
+  top: 1rem;
+  right: -6rem;
+  color: orange;
+  font-size: 1rem;
+  margin-top: 2rem;
+  position: absolute;
+  padding: 1rem 6rem;
+  font-weight: bolder;
+  text-decoration: none;
+  transform: rotate(45deg);
+  background-color: dimgrey;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.math-section {
+  display: flex;
+  align-items: center;
+}
+
+#a,
+#b {
+  width: 6rem;
+  height: 3rem;
+  outline: none;
+  color: wheat;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: 2px solid wheat;
+  background-color: darkslategray;
+}
+
+.math-sign {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 1rem;
+  display: flex;
+  color: wheat;
+  font-size: 3rem;
+  align-items: center;
+  justify-content: center;
+}
+
+#btn {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  margin: 0 2rem;
+  cursor: pointer;
+  border-radius: 2rem;
+  align-items: center;
+  color: darkslategray;
+  justify-content: center;
+  background-color: wheat;
+}
+
+#res {
+  height: 3rem;
+  display: flex;
+  color: wheat;
+  min-width: 6rem;
+  font-size: 2rem;
+  align-items: center;
+}
