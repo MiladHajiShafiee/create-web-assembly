@@ -19,7 +19,7 @@
     >
 
     <script type="module">
-      import CFunctions from "/app-browser.js";
+      import Functions from "/app-browser.js";
 
       const btn = document.getElementById("btn");
       btn.addEventListener(
@@ -27,7 +27,7 @@
         function () {
           const a = document.querySelector("#a").value;
           const b = document.querySelector("#b").value;
-          const sum = CFunctions.add(a, b);
+          const sum = Functions.add(a, b);
           document.querySelector("#res").innerHTML = `${sum}`;
           console.log(sum);
         },

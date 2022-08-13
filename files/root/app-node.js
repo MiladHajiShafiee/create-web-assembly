@@ -13,10 +13,10 @@ const wasmFilePath = `./build/${fileName}.wasm`;
 const buffer = fs.readFileSync(wasmFilePath);
 
 // Instantiate read wasm file with WebAssembly
-const result = await WebAssembly.instantiate(buffer);
+const result = await WebAssembly.instantiate(buffer, {});
 
-// Make exports variable which contains C functions
+// Make exports variable out of codes written in other languages
 const exports = result.instance.exports;
 
-// Export functions that are written in C
+// Export codes written in other languages
 export default exports;

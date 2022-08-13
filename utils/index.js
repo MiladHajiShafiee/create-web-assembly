@@ -9,7 +9,7 @@ export const lineLogger = (message) => (next) => {
   next();
 };
 
-// -------------------------------------- LINE LOGGER --------------------------------------- :
+// ------------------------------------- SIMPLE LOGGER -------------------------------------- :
 export const simpleLogger = (message) => {
   console.log("\n", chalk.white.bold(message), "\n");
 };
@@ -74,6 +74,7 @@ const installModule = (module, index, isLast, projectName) => {
   }
 };
 
+// ------------------------------------- INITIAL COMMAND ------------------------------------ :
 export const runInitialCommand = () => {
   runProCommand("npm pkg set 'type'='module'");
 };
@@ -105,6 +106,7 @@ const runCommand = (command, index, projectName) => {
   }
 };
 
+// -------------------------------------- RUN PROCOMMAND ------------------------------------ :
 export const runProCommand = (command) => {
   const spinner = ora({
     prefixText: "\n",
@@ -181,56 +183,65 @@ export const initiatingProject = (projectName, callback) => {
     {
       id: "1",
       destinationFileDir: `./${projectName}/app-browser.js`,
+      // sourceDir: `../create-webassembly-app/files/root/app-browser.js`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/app-browser.js`,
     },
     {
       id: "2",
       destinationFileDir: `./${projectName}/app-node.js`,
+      // sourceDir: `../create-webassembly-app/files/root/app-node.js`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/app-node.js`,
     },
     {
       id: "3",
       destinationFileDir: `./${projectName}/example.js`,
+      // sourceDir: `../create-webassembly-app/files/root/example.js`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/example.js`,
     },
     {
       id: "4",
       destinationFileDir: `./${projectName}/index.html`,
+      // sourceDir: `../create-webassembly-app/files/root/index.html`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/index.html`,
     },
     {
       id: "5",
       destinationFileDir: `./${projectName}/index.css`,
+      // sourceDir: `../create-webassembly-app/files/root/index.css`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/index.css`,
     },
     {
       id: "6",
       destinationFileDir: `./${projectName}/makefile`,
+      // sourceDir: `../create-webassembly-app/files/root/makefile`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/makefile`,
     },
     {
       id: "7",
       destinationFileDir: `./${projectName}/server.js`,
+      // sourceDir: `../create-webassembly-app/files/root/server.js`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/server.js`,
     },
     {
       id: "8",
       destinationFileDir: `./${projectName}/source/main.c`,
+      // sourceDir: `../create-webassembly-app/files/source/main.c`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/main.c`,
     },
     {
       id: "9",
       destinationFileDir: `./${projectName}/source/utils.c`,
+      // sourceDir: `../create-webassembly-app/files/source/utils.c`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/utils.c`,
     },
     {
       id: "10",
       destinationFileDir: `./${projectName}/source/utils.h`,
+      // sourceDir: `../create-webassembly-app/files/source/utils.h`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/utils.h`,
     },
   ];
 
-  simpleLogger(actionHeaders[0]);
   simpleLogger(actionHeaders[1]);
   folders.forEach((folder) => {
     createFolder(`${folder.dir}/${folder.name}`);
