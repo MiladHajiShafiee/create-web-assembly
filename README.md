@@ -40,12 +40,12 @@ Prefix commands with npx
 - **<span style="color:red">makefile</span>** will build **<span style="color:orange">C/C++</span>** files (with **<span style="color:green">emcc/em++</span>**)
 - **<span style="color:red">app-browser.js</span>** will instantiate the generated **<span style="color:orange">wasm</span>** file that you can use in your **<span style="color:green">index.html</span>** by importing it in script tag like below:
   ```javascript
-  import CFunctions from "/app-browser.js"
+  import Functions from "/app-browser.js"
   ```
 
 - **<span style="color:red">app-node.js</span>** will instantiate the generated **<span style="color:orange">wasm</span>** file that you can use in your **<span style="color:green">JS</span>** files by importing it like below (take a look at example.js file) :
   ```javascript
-  import CFunctions from "/app-node.js"
+  import Functions from "/app-node.js"
   ```
 
 - **<span style="color:red">example.js</span>** you can import **<span style="color:orange">app-node.js</span>** in this file and use **<span style="color:green">C/C++</span>** codes which are written in **<span style="color:green">source</span>** folder.
@@ -61,7 +61,7 @@ Prefix commands with npx
   ```
   > cd myApp
   ```
-  ### 3. <span style="color:red">In this step You should run these commands one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
+  ### 3. <span style="color:red">In this step You should run **commands** one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
 
 ## **<span style="color:orange">Magic Command</span>**
   run all the below commands at the same time
@@ -74,21 +74,21 @@ Prefix commands with npx
   - aggressive
 
 ## **<span style="color:orange">Commands</span>** :
-<span style="color:red">You should run these commands one by one and in order or run the <span style="color:orange">Magic command</span> after creating a new project</span>
+<span style="color:red">You should run these **commands** one by one and in order or run the **<span style="color:orange">Magic command</span>** after creating a new project</span>
 - <span style="color:gray">Build : (builds C files and generate .wasm and .js files)</span>
   ```
   > npx create-webassembly-app build myApp optLevel
   ```
 
-  ### optLevel (optimization level) **SHOULD** be one of these:
-   - none
-   - slight
-   - aggressive
+  <span style="color:gray">optLevel (optimization level) **SHOULD** be one of these:</span>
+   - <span style="color:gray">none</span>
+   - <span style="color:gray">slight</span>
+   - <span style="color:gray">aggressive</span>
 
 
 - <span style="color:gray">Generate wat file : (generates .wat file from .wasm file)</span>
   
-  <span style="color:gray">.wat file is not necessary for this project just it is the text format of .wasm file binary format</span>
+  <span style="color:gray"> **wat** file is not necessary for this project just it is the text format of **wasm** file binary format</span>
   ```
   > npx create-webassembly-app gen-wat myApp
   ```
