@@ -2,7 +2,7 @@
   "name": "create-webassembly-app",
   "version": "0.1.9",
   "type": "module",
-  "description": "create web apps in other programming languages and run in javascript with webassembly",
+  "description": "Create app in C/C++ (C++ coming soon) and run it in JS with webassembly",
   "main": "index.js",
   "scripts": {
     "create-webassembly-app": "node index.js"
