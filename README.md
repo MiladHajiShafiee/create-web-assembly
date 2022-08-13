@@ -1,6 +1,6 @@
 # create-webassembly-app
 
-### Create applications in other programming languages like C/C++ (C++ coming soon) and run in javascript with webassembly
+### Create app in C/C++ (C++ coming soon) and run it in JS with webassembly
 
 
 <img width="1437" alt="create-webassembly-app" src="https://user-images.githubusercontent.com/54850998/184387075-0d048428-9d83-4d35-b33e-307e6e7fef63.png">
@@ -54,21 +54,21 @@ Prefix commands with npx
   ### 1. Create a project
    
   ```
-  > npx create-webassembly-app init MyAwesomeWebAssemblyApp
+  > npx create-webassembly-app init myApp
   ```
   ### 2. Navigate to the project directory
 
   ```
-  > cd MyAwesomeWebAssemblyApp
+  > cd myApp
   ```
   ### 3. <span style="color:red">In this step You should run these commands one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
 
 ## **<span style="color:orange">Magic Command</span>**
   run all the below commands at the same time
   ```
-  > npx create-webassembly-app start MyAwesomeWebAssemblyApp optimizationLevel
+  > npx create-webassembly-app start myApp optLevel
   ```
-  ### optimizationLevel **SHOULD** be on of these:
+  ### optLevel (optimization level) **SHOULD** be one of these:
   - none
   - slight
   - aggressive
@@ -77,10 +77,10 @@ Prefix commands with npx
 <span style="color:red">You should run these commands one by one and in order or run the <span style="color:orange">Magic command</span> after creating a new project</span>
 - <span style="color:gray">Build : (builds C files and generate .wasm and .js files)</span>
   ```
-  > npx create-webassembly-app build MyAwesomeWebAssemblyApp optimizationLevel
+  > npx create-webassembly-app build myApp optLevel
   ```
 
-  ### optimizationLevel **SHOULD** be on of these:
+  ### optLevel (optimization level) **SHOULD** be one of these:
    - none
    - slight
    - aggressive
@@ -90,11 +90,11 @@ Prefix commands with npx
   
   <span style="color:gray">.wat file is not necessary for this project just it is the text format of .wasm file binary format</span>
   ```
-  > npx create-webassembly-app gen-wat MyAwesomeWebAssemblyApp
+  > npx create-webassembly-app gen-wat myApp
   ```
 - <span style="color:gray">Run example (runs the codes inside example.js file)</span>
   ```
-  > npx create-webassembly-app run-js MyAwesomeWebAssemblyApp
+  > npx create-webassembly-app run-js myApp
   ```
 - <span style="color:gray">Run server (serves index.html on port 3000)</span>
   ```
