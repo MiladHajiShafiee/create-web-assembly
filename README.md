@@ -3,9 +3,12 @@ You should have **[Emscripten](https://emscripten.org/docs/getting_started/downl
 
 <img width="1437" alt="create-webassembly-app" src="https://user-images.githubusercontent.com/54850998/184387075-0d048428-9d83-4d35-b33e-307e6e7fef63.png">
 
+
+You can use the diff language tag to generate some colored text:
+
 ## **<span style="color:orange">Mac</span> prerequisite installations with <span style="color:orange">Homebrew</span>** :
- If Homebrew is NOT installed you can install from here :
- ```
+  If Homebrew is NOT installed you can install from here :
+ ```js
   > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 ```
@@ -33,20 +36,29 @@ Prefix commands with npx
 - **<span style="color:red">server.js</span>** will serve **<span style="color:orange">index.html</span>** on port **<span style="color:green">3000</span>**
 - **<span style="color:red">makefile</span>** will build **<span style="color:orange">C</span>** files (with **<span style="color:green">emcc</span>**)
 - **<span style="color:red">app-browser.js</span>** will instantiate the generated **<span style="color:orange">wasm</span>** file that you can use in your **<span style="color:green">index.html</span>** by importing it in script tag like below:
-  > <span style="color:orange">import</span> <span style="color:lightblue">CFunctions</span> <span style="color:orange">from</span> <span style="color:brown">"/app-browser.js"</span>
+  ```javascript
+  import CFunctions from "/app-browser.js"
+  ```
 
 - **<span style="color:red">app-node.js</span>** will instantiate the generated **<span style="color:orange">wasm</span>** file that you can use in your **<span style="color:green">JS</span>** files by importing it like below (take a look at example.js file) :
-  > <span style="color:orange">import</span> <span style="color:lightblue">CFunctions</span> <span style="color:orange">from</span> <span style="color:brown">"/app-node.js"</span>
+  ```javascript
+  import CFunctions from "/app-node.js"
+  ```
 
 - **<span style="color:red">example.js</span>** you can import **<span style="color:orange">app-node.js</span>** in this file and use **<span style="color:green">C</span>** functions which are written in **<span style="color:green">source</span>** folder.
 
-## **<span style="color:orange">Creat a project</span>**
+## **<span style="color:orange">How to use</span>**
+  ### 1. Create a project
+   
   ```
   > npx create-webassembly-app init MyAwesomeWebAssemblyApp
   ```
+  ### 2. Navigate to the project directory
+
   ```
   > cd MyAwesomeWebAssemblyApp
   ```
+  ### 3. <span style="color:red">In this step You should run these commands one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
 
 ## **<span style="color:orange">Magic Command</span>**
   run all the below commands at the same time
@@ -54,8 +66,8 @@ Prefix commands with npx
   > npx create-webassembly-app start MyAwesomeWebAssemblyApp
   ```
 
-## **<span style="color:orange">Usage(commands)</span>** :
-<span style="color:red">You should run these commands one by one and in order or do the </span> <span style="color:orange">Magic command</span>
+## **<span style="color:orange">Commands</span>** :
+<span style="color:red">You should run these commands one by one and in order or run the <span style="color:orange">Magic command</span> after creating a new project</span>
 - <span style="color:gray">Build : (builds C files and generate .wasm and .js files)</span>
   ```
   > npx create-webassembly-app build MyAwesomeWebAssemblyApp
