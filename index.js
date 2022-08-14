@@ -8,6 +8,8 @@ import start from "./commands/start.js";
 import runJs from "./commands/run-js.js";
 import server from "./commands/server.js";
 import getWat from "./commands/gen-wat.js";
+import initReact from "./commands/init-react.js";
+import buildReact from "./commands/build-react.js";
 import list, { commands } from "./commands/list.js";
 
 program.command(commands[6].name).description(commands[6].desc).action(list);
@@ -23,5 +25,12 @@ program
   .command(`${commands[4].name} <projectName> <optLevel> <sourcePath> <filesExtension>`)
   .description(commands[4].desc)
   .action(start);
+
+// ReactJs commands
+program.command(`${commands[7].name}`).description(commands[7].desc).action(initReact);
+program
+  .command(`${commands[8].name} <fileName> <optLevel> <sourcePath> <filesExtension>`)
+  .description(commands[8].desc)
+  .action(buildReact);
 
 program.parse();

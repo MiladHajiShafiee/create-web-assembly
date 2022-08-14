@@ -4,6 +4,41 @@ import path from "path";
 import chalk from "chalk";
 import { execSync, spawnSync } from "child_process";
 
+const actionHeaders = [
+  " -------------------------------- ⚙️  INITIATING THE PROJECT ⚙️  -------------------------------- :",
+  " ------------------------------ ➕  CREATING REQUIRED FOLDERS ➕  ------------------------------ :",
+  " ------------------------------- ➕  CREATING REQUIRED FILES ➕  ------------------------------- :",
+  " ----------------------------------- ⚙️  INSTALLING MODULES ⚙️  --------------------------------- :",
+  " ------------------------------ 💻  RUNNING REQUIRED COMMANDS  💻  ----------------------------- :",
+];
+
+const modules = [
+  {
+    id: "1",
+    name: "cors",
+    installer: "npm",
+    command: "install",
+  },
+  {
+    id: "2",
+    name: "express",
+    installer: "npm",
+    command: "install",
+  },
+  {
+    id: "3",
+    name: "nodemon",
+    installer: "npm",
+    command: "install",
+  },
+  {
+    id: "4",
+    installer: "npm",
+    command: "install",
+    name: "create-webassembly-app",
+  },
+];
+
 // -------------------------------------- LINE LOGGER --------------------------------------- :
 export const lineLogger = (message) => (next) => {
   console.log("\n", chalk.white.bold(message), "\n");
@@ -75,8 +110,8 @@ const installModule = (module, index, isLast, projectName) => {
   }
 };
 
-// --------------------------------- CREATE MAKEFILE CONTENT -------------------------------- :
-let contentPaths = [];
+// ------------------------------ CREATE MAKEFILE CONTENT ARRAY ----------------------------- :
+let contentPaths;
 const createMakefileContentArray = (folderPath, fileExtension) => {
   if (!fs.existsSync(folderPath)) {
     console.log(chalk.red.bold(`❌ There is no ${folderPath} path \n`));
@@ -101,6 +136,7 @@ const createMakefileContentArray = (folderPath, fileExtension) => {
   }
 };
 
+// ------------------------------------- CREATE MAKEFILE ------------------------------------ :
 const createMakefile = () => {
   const makeCommand = `build_to_js: ${contentPaths.join(" ")}
 \temcc ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
@@ -133,11 +169,43 @@ build_to_html_optLevel_-O2: ${contentPaths.join(" ")}
   }
 };
 
+// ---------------------------------- CREATE REACT MAKEFILE --------------------------------- :
+const createReactMakefile = () => {
+  const makeCommand = `build_to_js: ${contentPaths.join(" ")}
+\temcc ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
+
+build_to_js_optLevel_-O1: ${contentPaths.join(" ")}
+\temcc -O1 ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
+
+build_to_js_optLevel_-O2: ${contentPaths.join(" ")}
+\temcc -O2 ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
+`;
+
+  try {
+    fs.writeFileSync("./makefile", makeCommand);
+    console.log(
+      `\n ✅  ${chalk
+        .hex("#FFA500")
+        .bold(`   makefile's content is added to makefile ${chalk.green.bold("successfully")}`)}\n`
+    );
+  } catch (err) {
+    console.log(chalk.red.bold(`❌  ${err} \n`));
+  }
+};
+
 // ------------------------------------- INITIAL COMMAND ------------------------------------ :
 export const runInitialCommand = (sourcePath, filesExtension) => {
+  contentPaths = [];
   runProCommand("npm pkg set 'type'='module'");
   createMakefileContentArray(sourcePath, `.${filesExtension}`);
   createMakefile();
+};
+
+// ---------------------------------- REACT INITIAL COMMAND --------------------------------- :
+export const runReactInitialCommand = (sourcePath, filesExtension) => {
+  contentPaths = [];
+  createMakefileContentArray(sourcePath, `.${filesExtension}`);
+  createReactMakefile();
 };
 
 // --------------------------------------- RUN COMMAND -------------------------------------- :
@@ -192,18 +260,10 @@ export const runProCommand = (command) => {
   }
 };
 
-// ------------------------------------- CREATE FOLDERS ------------------------------------- :
+// ------------------------------------- INITIAL PROJECT ------------------------------------ :
 export const initiatingProject = (projectName, callback) => {
   console.log("\n");
   const startTime = Date.now();
-
-  const actionHeaders = [
-    " -------------------------------- ⚙️  INITIATING THE PROJECT ⚙️  -------------------------------- :",
-    " ------------------------------ ➕  CREATING REQUIRED FOLDERS ➕  ------------------------------ :",
-    " ------------------------------- ➕  CREATING REQUIRED FILES ➕  ------------------------------- :",
-    " ----------------------------------- ⚙️  INSTALLING MODULES ⚙️  --------------------------------- :",
-    " ------------------------------ 💻  RUNNING REQUIRED COMMANDS  💻  ----------------------------- :",
-  ];
 
   const folders = [
     { id: "1", name: projectName, dir: "." },
@@ -214,33 +274,6 @@ export const initiatingProject = (projectName, callback) => {
   ];
 
   const commands = [{ id: "2", command: "npm init --yes" }];
-
-  const modules = [
-    {
-      id: "1",
-      installer: "npm",
-      command: "install",
-      name: "cors",
-    },
-    {
-      id: "2",
-      installer: "npm",
-      command: "install",
-      name: "express",
-    },
-    {
-      id: "3",
-      installer: "npm",
-      command: "install",
-      name: "nodemon",
-    },
-    {
-      id: "4",
-      installer: "npm",
-      command: "install",
-      name: "create-webassembly-app",
-    },
-  ];
 
   const files = [
     {
@@ -332,6 +365,97 @@ export const initiatingProject = (projectName, callback) => {
     const isLast = 1 + index === modules.length;
     installModule(module, index, isLast, projectName);
   });
+
+  simpleLogger(actionHeaders[2]);
+  files.forEach((file) => {
+    createFile(file.sourceDir, file.destinationFileDir);
+  });
+
+  callback(startTime);
+};
+
+// ---------------------------------- INITIAL REACT PROJECT --------------------------------- :
+export const initiateReactProject = (callback) => {
+  console.log("\n");
+  const startTime = Date.now();
+
+  const folders = [
+    { id: "1", name: "wasm", dir: "./src" },
+    { id: "2", name: "build", dir: "./src/wasm" },
+    { id: "3", name: "source", dir: "./src/wasm" },
+    { id: "4", name: "add", dir: "./src/wasm/source" },
+    { id: "5", name: "subtract", dir: "./src/wasm/source" },
+  ];
+
+  const files = [
+    {
+      id: "1",
+      destinationFileDir: "./src/App.js",
+      // sourceDir: "../create-webassembly-app/files/react/App.js",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/App.js",
+    },
+    {
+      id: "2",
+      destinationFileDir: "./src/App.css",
+      // sourceDir: "../create-webassembly-app/files/react/App.css",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/App.css",
+    },
+    {
+      id: "3",
+      destinationFileDir: "./src/wasm/use-wasm.js",
+      // sourceDir: "../create-webassembly-app/files/react/use-wasm.js",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/use-wasm.js",
+    },
+    {
+      id: "4",
+      destinationFileDir: "./src/wasm/makefile",
+      // sourceDir: "../create-webassembly-app/files/react/makefile",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/makefile",
+    },
+    {
+      id: "5",
+      destinationFileDir: "./src/wasm/source/main.c",
+      // sourceDir: "../create-webassembly-app/files/react/wasm/source/main.c",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/wasm/source/main.c",
+    },
+    {
+      id: "6",
+      destinationFileDir: "./src/wasm/source/add/add.c",
+      // sourceDir: "../create-webassembly-app/files/react/wasm/source/add/add.c",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/wasm/source/add/add.c",
+    },
+    {
+      id: "7",
+      destinationFileDir: "./src/wasm/source/add/add.h",
+      // sourceDir: "../create-webassembly-app/files/react/wasm/source/add/add.h",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/wasm/source/add/add.h",
+    },
+    {
+      id: "8",
+      destinationFileDir: "./src/wasm/source/subtract/subtract.c",
+      // sourceDir: "../create-webassembly-app/files/react/wasm/source/subtract/subtract.c",
+      sourceDir:
+        "./node_modules/create-webassembly-app/files/react/wasm/source/subtract/subtract.c",
+    },
+    {
+      id: "9",
+      destinationFileDir: "./src/wasm/source/subtract/subtract.h",
+      // sourceDir: "../create-webassembly-app/files/react/wasm/source/subtract/subtract.h",
+      sourceDir:
+        "./node_modules/create-webassembly-app/files/react/wasm/source/subtract/subtract.h",
+    },
+  ];
+
+  fs.unlinkSync("./src/App.js");
+  fs.unlinkSync("./src/App.css");
+
+  simpleLogger(actionHeaders[1]);
+  folders.forEach((folder) => {
+    createFolder(`${folder.dir}/${folder.name}`);
+  });
+
+  simpleLogger(actionHeaders[3]);
+  installModule(modules[3], 0, true, "");
 
   simpleLogger(actionHeaders[2]);
   files.forEach((file) => {

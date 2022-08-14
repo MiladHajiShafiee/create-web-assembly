@@ -36,6 +36,16 @@ export const commands = [
     name: "list",
     desc: "This command will list all other commands\n",
   },
+  {
+    id: "8",
+    name: "init-react",
+    desc: "This command will setup requirements inside react app",
+  },
+  {
+    id: "9",
+    name: "build-react",
+    desc: "builds C files and generate .wasm and .js files\n",
+  },
 ];
 
 function list() {
