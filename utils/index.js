@@ -1,5 +1,6 @@
 import fs from "fs";
 import ora from "ora";
+import path from "path";
 import chalk from "chalk";
 import { execSync, spawnSync } from "child_process";
 
@@ -74,9 +75,69 @@ const installModule = (module, index, isLast, projectName) => {
   }
 };
 
+// --------------------------------- CREATE MAKEFILE CONTENT -------------------------------- :
+let contentPaths = [];
+const createMakefileContentArray = (folderPath, fileExtension) => {
+  if (!fs.existsSync(folderPath)) {
+    console.log(chalk.red.bold(`❌ There is no ${folderPath} path \n`));
+    return;
+  }
+
+  const files = fs.readdirSync(folderPath);
+
+  for (let i = 0; i < files.length; i++) {
+    const filename = path.join(folderPath, files[i]);
+    const stat = fs.lstatSync(filename);
+
+    if (stat.isDirectory()) {
+      createMakefileContentArray(filename, fileExtension); //recurse
+    } else if (filename.endsWith(fileExtension)) {
+      const splitFilename = filename.split("/");
+      splitFilename.pop();
+      const convertSplitFilenameToPath = splitFilename.join("/");
+      const prefixFilename = `./${convertSplitFilenameToPath}/*${fileExtension}`;
+      contentPaths = [...contentPaths, prefixFilename];
+    }
+  }
+};
+
+const createMakefile = () => {
+  const makeCommand = `build_to_js: ${contentPaths.join(" ")}
+\temcc ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
+
+build_to_html: ${contentPaths.join(" ")}
+\temcc ${contentPaths.join(" ")} -o ./build/$(FILENAME).html
+
+build_to_js_optLevel_-O1: ${contentPaths.join(" ")}
+\temcc -O1 ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
+
+build_to_html_optLevel_-O1: ${contentPaths.join(" ")}
+\temcc -O1 ${contentPaths.join(" ")} -o ./build/$(FILENAME).html
+
+build_to_js_optLevel_-O2: ${contentPaths.join(" ")}
+\temcc -O2 ${contentPaths.join(" ")} -o ./build/$(FILENAME).js
+
+build_to_html_optLevel_-O2: ${contentPaths.join(" ")}
+\temcc -O2 ${contentPaths.join(" ")} -o ./build/$(FILENAME).html
+`;
+
+  try {
+    fs.writeFileSync("./makefile", makeCommand);
+    console.log(
+      `\n ✅  ${chalk
+        .hex("#FFA500")
+        .bold(`   makefile's content is added to makefile ${chalk.green.bold("successfully")}`)}\n`
+    );
+  } catch (err) {
+    console.log(chalk.red.bold(`❌  ${err} \n`));
+  }
+};
+
 // ------------------------------------- INITIAL COMMAND ------------------------------------ :
-export const runInitialCommand = () => {
+export const runInitialCommand = (sourcePath, filesExtension) => {
   runProCommand("npm pkg set 'type'='module'");
+  createMakefileContentArray(sourcePath, `.${filesExtension}`);
+  createMakefile();
 };
 
 // --------------------------------------- RUN COMMAND -------------------------------------- :
@@ -148,6 +209,8 @@ export const initiatingProject = (projectName, callback) => {
     { id: "1", name: projectName, dir: "." },
     { id: "2", name: "build", dir: `./${projectName}` },
     { id: "3", name: "source", dir: `./${projectName}` },
+    { id: "4", name: "add", dir: `./${projectName}/source` },
+    { id: "5", name: "subtract", dir: `./${projectName}/source` },
   ];
 
   const commands = [{ id: "2", command: "npm init --yes" }];
@@ -174,7 +237,7 @@ export const initiatingProject = (projectName, callback) => {
     {
       id: "4",
       installer: "npm",
-      command: "install",
+      command: "link",
       name: "create-webassembly-app",
     },
   ];
@@ -183,62 +246,74 @@ export const initiatingProject = (projectName, callback) => {
     {
       id: "1",
       destinationFileDir: `./${projectName}/app-browser.js`,
-      // sourceDir: `../create-webassembly-app/files/root/app-browser.js`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/app-browser.js`,
+      sourceDir: `../create-webassembly-app/files/root/app-browser.js`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/app-browser.js`,
     },
     {
       id: "2",
       destinationFileDir: `./${projectName}/app-node.js`,
-      // sourceDir: `../create-webassembly-app/files/root/app-node.js`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/app-node.js`,
+      sourceDir: `../create-webassembly-app/files/root/app-node.js`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/app-node.js`,
     },
     {
       id: "3",
       destinationFileDir: `./${projectName}/example.js`,
-      // sourceDir: `../create-webassembly-app/files/root/example.js`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/example.js`,
+      sourceDir: `../create-webassembly-app/files/root/example.js`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/example.js`,
     },
     {
       id: "4",
       destinationFileDir: `./${projectName}/index.html`,
-      // sourceDir: `../create-webassembly-app/files/root/index.html`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/index.html`,
+      sourceDir: `../create-webassembly-app/files/root/index.html`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/index.html`,
     },
     {
       id: "5",
       destinationFileDir: `./${projectName}/index.css`,
-      // sourceDir: `../create-webassembly-app/files/root/index.css`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/index.css`,
+      sourceDir: `../create-webassembly-app/files/root/index.css`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/index.css`,
     },
     {
       id: "6",
       destinationFileDir: `./${projectName}/makefile`,
-      // sourceDir: `../create-webassembly-app/files/root/makefile`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/makefile`,
+      sourceDir: `../create-webassembly-app/files/root/makefile`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/makefile`,
     },
     {
       id: "7",
       destinationFileDir: `./${projectName}/server.js`,
-      // sourceDir: `../create-webassembly-app/files/root/server.js`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/server.js`,
+      sourceDir: `../create-webassembly-app/files/root/server.js`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/server.js`,
     },
     {
       id: "8",
       destinationFileDir: `./${projectName}/source/main.c`,
-      // sourceDir: `../create-webassembly-app/files/source/main.c`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/main.c`,
+      sourceDir: `../create-webassembly-app/files/source/main.c`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/main.c`,
     },
     {
       id: "9",
-      destinationFileDir: `./${projectName}/source/utils.c`,
-      // sourceDir: `../create-webassembly-app/files/source/utils.c`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/utils.c`,
+      destinationFileDir: `./${projectName}/source/add/add.c`,
+      sourceDir: `../create-webassembly-app/files/source/add/add.c`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/add/add.c`,
     },
     {
       id: "10",
-      destinationFileDir: `./${projectName}/source/utils.h`,
-      // sourceDir: `../create-webassembly-app/files/source/utils.h`,
-      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/utils.h`,
+      destinationFileDir: `./${projectName}/source/add/add.h`,
+      sourceDir: `../create-webassembly-app/files/source/add/add.h`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/add/add.h`,
+    },
+    {
+      id: "11",
+      destinationFileDir: `./${projectName}/source/subtract/subtract.c`,
+      sourceDir: `../create-webassembly-app/files/source/subtract/subtract.c`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/subtract/subtract.c`,
+    },
+    {
+      id: "12",
+      destinationFileDir: `./${projectName}/source/subtract/subtract.h`,
+      sourceDir: `../create-webassembly-app/files/source/subtract/subtract.h`,
+      // sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/subtract/subtract.h`,
     },
   ];
 

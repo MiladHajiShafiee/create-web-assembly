@@ -1,8 +1,10 @@
-#include "utils.h"
 #include <emscripten.h>
 
+#include "./add/add.h"
+#include "./subtract/subtract.h"
+
 EMSCRIPTEN_KEEPALIVE
-int add2Nums(int a)
+int myFunc(int a, int b)
 {
-  return add(2, 5);
+  return subtract(a, b) + add(a, b);
 }

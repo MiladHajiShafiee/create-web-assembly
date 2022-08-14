@@ -1,5 +1,5 @@
 import Functions from "./app-node.js";
 
-const sum = Functions.add(2, 3);
+const result = Functions.myFunc(2, 3);
 
-console.log(sum);
+console.log(result);

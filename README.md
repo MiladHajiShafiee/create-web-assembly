@@ -54,49 +54,82 @@ Prefix commands with npx
   ### 1. Create a project
    
   ```
-  > npx create-webassembly-app init myApp
+  > npx create-webassembly-app init appName
   ```
   ### 2. Navigate to the project directory
 
   ```
-  > cd myApp
+  > cd appName
   ```
-  ### 3. <span style="color:red">In this step You should run **commands** one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
+  ### 3. <span style="color:red">In this step You should run below **commands** one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
+
+## **<span style="color:orange">Commands</span>** :
+<span style="color:red">You should run these **commands** one by one and in order or run the **<span style="color:orange">Magic command</span>** after creating a new project</span>
+- Build : (builds C files and generate .wasm and .js files)
+  ```
+  > npx create-webassembly-app build appName optLevel sourcePath filesExtension
+  ```
+
+- optLevel (optimization level) **SHOULD** be one of these:
+     - none
+     - slight
+     - aggressive
+
+- sourcePath (The path of the folder which will contain your code files)
+  DEFAULT is source and if you want to use another name then change the folder name in the directory too
+
+- filesExtension (the extension of code files, like c for C programming language)
+
+    **Example command:**
+    ```
+    > npx create-webassembly-app build myApp none ./source/ c
+    ```
+
+    Another example with different sourth folder name
+    
+    **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory
+    ```
+    > npx create-webassembly-app build myApp none ./src/ c
+    ```
+
+- Generate wat file : (generates .wat file from .wasm file)
+  
+   **wat** file is not necessary for this project just it is the text format of **wasm** file binary format
+  ```
+  > npx create-webassembly-app gen-wat appName
+  ```
+- Run example (runs the codes inside example.js file)
+  ```
+  > npx create-webassembly-app run-js appName
+  ```
+- Run server (serves index.html on port 3000)
+  ```
+  > npx create-webassembly-app server
+  ```
 
 ## **<span style="color:orange">Magic Command</span>**
   run all the below commands at the same time
   ```
-  > npx create-webassembly-app start myApp optLevel
+  > npx create-webassembly-app start appName optLevel sourcePath filesExtension
   ```
-  ### optLevel (optimization level) **SHOULD** be one of these:
-  - none
-  - slight
-  - aggressive
+  - optLevel (optimization level) **SHOULD** be one of these:
+    - none
+    - slight
+    - aggressive
 
-## **<span style="color:orange">Commands</span>** :
-<span style="color:red">You should run these **commands** one by one and in order or run the **<span style="color:orange">Magic command</span>** after creating a new project</span>
-- <span style="color:gray">Build : (builds C files and generate .wasm and .js files)</span>
-  ```
-  > npx create-webassembly-app build myApp optLevel
-  ```
+  - sourcePath (The path of the folder which will contain your code files)
+  DEFAULT is source and if you want to use another name then change the folder name in the directory as well
 
-  <span style="color:gray">optLevel (optimization level) **SHOULD** be one of these:</span>
-   - <span style="color:gray">none</span>
-   - <span style="color:gray">slight</span>
-   - <span style="color:gray">aggressive</span>
+  - filesExtension (the extension of code files, like c for C programming language)
 
+    Example command:
+    ```
+    > npx create-webassembly-app start myApp none ./source/ c
+    ```
 
-- <span style="color:gray">Generate wat file : (generates .wat file from .wasm file)</span>
-  
-  <span style="color:gray"> **wat** file is not necessary for this project just it is the text format of **wasm** file binary format</span>
-  ```
-  > npx create-webassembly-app gen-wat myApp
-  ```
-- <span style="color:gray">Run example (runs the codes inside example.js file)</span>
-  ```
-  > npx create-webassembly-app run-js myApp
-  ```
-- <span style="color:gray">Run server (serves index.html on port 3000)</span>
-  ```
-  > npx create-webassembly-app server
-  ```
+    Another example with different sourth folder name
+    
+    **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory
+    ```
+    > npx create-webassembly-app start myApp none ./src/ c
+    ```
