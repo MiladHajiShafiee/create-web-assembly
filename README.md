@@ -9,7 +9,7 @@ You should have **[Emscripten](https://emscripten.org/docs/getting_started/downl
 
 You can use the diff language tag to generate some colored text:
 
-## **<span style="color:orange">Mac</span> prerequisite installations with <span style="color:orange">Homebrew</span>** :
+## **Mac prerequisite installations with Homebrew** :
   If Homebrew is NOT installed you can install from here :
  ```js
   > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -26,31 +26,31 @@ You can use the diff language tag to generate some colored text:
 ```
  > brew install make
 ```
-## **<span style="color:orange">Installation</span>** :
+## **Installation** :
 ```
 > npm i create-webassembly-app
 ```
 or
 Prefix commands with npx
 
-## **<span style="color:orange">Repo introduction</span>** :
-- **<span style="color:red">source</span>** folder contains **<span style="color:orange">C/C++</span>** files and their **<span style="color:orange">headers</span>**.
-- **<span style="color:red">build</span>** folder will contain **<span style="color:orange">.wasm</span>, <span style="color:orange">.wat</span>, <span style="color:orange">.html</span>**  and **<span style="color:orange">.js</span>** files after starting or (build + gen-wat).
-- **<span style="color:red">server.js</span>** will serve **<span style="color:orange">index.html</span>** on port **<span style="color:green">3000</span>**
-- **<span style="color:red">makefile</span>** will build **<span style="color:orange">C/C++</span>** files (with **<span style="color:green">emcc/em++</span>**)
-- **<span style="color:red">app-browser.js</span>** will instantiate the generated **<span style="color:orange">wasm</span>** file that you can use in your **<span style="color:green">index.html</span>** by importing it in script tag like below:
+## **Repo introduction** :
+- **source** folder contains **C/C++** files and their **headers**.
+- **build** folder will contain **.wasm, .wat, .html**  and **.js** files after starting or (build + gen-wat).
+- **server.js** will serve **index.html** on port **3000**
+- **makefile** will build **C/C++** files (with **emcc/em++**)
+- **app-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below:
   ```javascript
   import Functions from "/app-browser.js"
   ```
 
-- **<span style="color:red">app-node.js</span>** will instantiate the generated **<span style="color:orange">wasm</span>** file that you can use in your **<span style="color:green">JS</span>** files by importing it like below (take a look at example.js file) :
+- **app-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file) :
   ```javascript
   import Functions from "/app-node.js"
   ```
 
-- **<span style="color:red">example.js</span>** you can import **<span style="color:orange">app-node.js</span>** in this file and use **<span style="color:green">C/C++</span>** codes which are written in **<span style="color:green">source</span>** folder.
+- **example.js** you can import **app-node.js** in this file and use **C/C++** codes which are written in **source** folder.
 
-## **<span style="color:orange">How to use</span>**
+## **How to use**
   ### 1. Create a project
    
   ```
@@ -61,10 +61,10 @@ Prefix commands with npx
   ```
   > cd appName
   ```
-  ### 3. <span style="color:red">In this step You should run below **commands** one by one and in order **OR** run the </span> <span style="color:orange">Magic command</span>
+  ### 3. In this step You should run below **commands** one by one and in order **OR** run the  Magic command
 
-## **<span style="color:orange">Commands</span>** :
-<span style="color:red">You should run these **commands** one by one and in order or run the **<span style="color:orange">Magic command</span>** after creating a new project</span>
+## **Commands** :
+You should run these **commands** one by one and in order or run the **Magic command** after creating a new project
 ### 1. Build : (builds C files and generate .wasm and .js files)
   ```
   > npx create-webassembly-app build appName optLevel sourcePath filesExtension
@@ -107,7 +107,7 @@ Prefix commands with npx
   > npx create-webassembly-app server
   ```
 
-## **<span style="color:orange">Magic Command</span>**
+## **Magic Command**
   run all the below commands at the same time
   ```
   > npx create-webassembly-app start appName optLevel sourcePath filesExtension
