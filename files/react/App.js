@@ -27,12 +27,12 @@ function App() {
   return (
     <div className="App">
       <div className="text">
-        <h1 className="title">WebAssembly</h1>
-        <h1 className="desc">Code in C/C++ and run it in Javascript with WebAssembly</h1>
+        <h1 className="title">WebAssembly with React</h1>
+        <h1 className="desc">Code in C/C++ and run it in your React with WebAssembly</h1>
       </div>
       <a
-        className="docs"
         target="_blank"
+        className="docs"
         rel="noreferrer"
         href="https://www.npmjs.com/package/create-webassembly-app"
       >
