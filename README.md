@@ -65,15 +65,15 @@ Prefix commands with npx
 
 ## **<span style="color:orange">Commands</span>** :
 <span style="color:red">You should run these **commands** one by one and in order or run the **<span style="color:orange">Magic command</span>** after creating a new project</span>
-- Build : (builds C files and generate .wasm and .js files)
+### 1. Build : (builds C files and generate .wasm and .js files)
   ```
   > npx create-webassembly-app build appName optLevel sourcePath filesExtension
   ```
 
-- optLevel (optimization level) **SHOULD** be one of these:
-     - none
-     - slight
-     - aggressive
+   - optLevel (optimization level) **SHOULD** be one of these:
+        - none
+        - slight
+        - aggressive
 
 - sourcePath (The path of the folder which will contain your code files)
   DEFAULT is source and if you want to use another name then change the folder name in the directory too
@@ -92,17 +92,17 @@ Prefix commands with npx
     > npx create-webassembly-app build myApp none ./src/ c
     ```
 
-- Generate wat file : (generates .wat file from .wasm file)
-  
-   **wat** file is not necessary for this project just it is the text format of **wasm** file binary format
+### 2. Generate wat file : (generates .wat file from .wasm file)
+  **wat** file is not necessary for this project just it is the text format of **wasm** file binary format
+
   ```
   > npx create-webassembly-app gen-wat appName
   ```
-- Run example (runs the codes inside example.js file)
+### 3. Run example (runs the codes inside example.js file)
   ```
   > npx create-webassembly-app run-js appName
   ```
-- Run server (serves index.html on port 3000)
+### 4. Running server (serves index.html on port 3000)
   ```
   > npx create-webassembly-app server
   ```
