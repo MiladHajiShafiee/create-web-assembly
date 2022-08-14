@@ -75,7 +75,7 @@ Prefix commands with npx
   > cd appName
   ```
 
-### 3. Initiate requirements
+### 3. Initiate requirements: ( warning: This command will replace App.css and App.js with new ones )
 
   ```
   > npx create-webassembly-app init-react
