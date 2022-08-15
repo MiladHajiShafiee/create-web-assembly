@@ -266,8 +266,13 @@ You should run these **commands** one by one and in order or run the **Magic com
 
 ### 3. Run example (runs the codes inside example.js file)
 
+  For test:
   ```
   > npx create-webassembly-app run-js appName
+  ```
+  Show result:
+  ```
+  > node example.js appName
   ```
 
 ### 4. Running server (serves index.html on port 3000)
