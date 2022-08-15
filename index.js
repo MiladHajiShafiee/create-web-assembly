@@ -15,6 +15,7 @@ import startReact from "./commands/start-react.js";
 import { commands } from "./commands/_COMMANDS_LIST.js";
 
 program.command(commands[6].name).description(commands[6].desc).action(list);
+program.command(commands[10].name).description(commands[10].desc).action(list);
 program.command(`${commands[5].name} <projectName>`).description(commands[5].desc).action(init);
 program
   .command(`${commands[0].name} <projectName> <optLevel> <sourcePath> <filesExtension>`)

@@ -49,4 +49,9 @@ export const commands = [
     name: "start-react",
     desc: "run all necessary commands for initiating, setting up and running wasm in a React project\n",
   },
+  {
+    id: "11",
+    name: "help",
+    desc: "This command will list all other commands\n",
+  },
 ];
