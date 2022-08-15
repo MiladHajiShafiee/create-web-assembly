@@ -3,6 +3,7 @@
 import { program } from "commander";
 
 import init from "./commands/init.js";
+import list from "./commands/list.js";
 import build from "./commands/build.js";
 import start from "./commands/start.js";
 import runJs from "./commands/run-js.js";
@@ -10,7 +11,8 @@ import server from "./commands/server.js";
 import getWat from "./commands/gen-wat.js";
 import initReact from "./commands/init-react.js";
 import buildReact from "./commands/build-react.js";
-import list, { commands } from "./commands/list.js";
+import startReact from "./commands/start-react.js";
+import { commands } from "./commands/_COMMANDS_LIST.js";
 
 program.command(commands[6].name).description(commands[6].desc).action(list);
 program.command(`${commands[5].name} <projectName>`).description(commands[5].desc).action(init);
@@ -32,5 +34,11 @@ program
   .command(`${commands[8].name} <fileName> <optLevel> <sourcePath> <filesExtension>`)
   .description(commands[8].desc)
   .action(buildReact);
+program
+  .command(
+    `${commands[9].name} <projectName>, <fileName>, <optLevel>, <sourcePath>, <filesExtension>`
+  )
+  .description(`${commands[9].desc}`)
+  .action(startReact);
 
 program.parse();

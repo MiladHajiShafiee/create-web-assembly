@@ -6,7 +6,6 @@
 
 You should have **[Emscripten](https://emscripten.org/docs/getting_started/downloads.html), [WABT](https://github.com/WebAssembly/wabt), [Node js](https://nodejs.org/en/) and [Make]()** installed on your machine, you can find installations guide for mac below :
 
-You can use the diff language tag to generate some colored text:
 
 ## **Mac prerequisite installations with Homebrew**
 
@@ -38,30 +37,62 @@ You can use the diff language tag to generate some colored text:
 > npm i create-webassembly-app
 ```
 
-or
+### OR
 Prefix commands with npx
 
-## **Repo introduction**
+## **Package introduction**
 
-- **source** folder contains **C/C++** files and their **headers**.
-- **build** folder will contain **.wasm, .wat, .html**  and **.js** files after starting or (build + gen-wat).
-- **server.js** will serve **index.html** on port **3000**
+- **source** folder contains **C/C++** files and their **headers** (You can also make other nested folders inside source folder they will be added to the makefile automatically).
+- **build** folder will contain **.wasm, .wat, .html**  and **.js** files after starting or [build + gen-wat] (In ReactJs case it won't contain html file).
+- **server.js** will serve **index.html** on port **3000** (Doesn't exist in ReactJs case, because create-react-app will run the app on port 3000 automatically)
 - **makefile** will build **C/C++** files (with **emcc/em++**)
-- **app-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below:
+- **app-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below (Doesn't exist in ReacJs case, a hook will handle it in ReacJs):
 
   ```javascript
   import Functions from "/app-browser.js"
   ```
 
-- **app-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file) :
+- **app-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file, Doesn't exist in ReacJs case, a hook will handle it in ReacJs) :
 
   ```javascript
   import Functions from "/app-node.js"
   ```
 
-- **example.js** you can import **app-node.js** in this file and use **C/C++** codes which are written in **source** folder.
+- **example.js** you can import **app-node.js** in this file and use **C/C++** codes which are written in **source** folder (Doesn't exist in ReacJs case, by importing a hook you can use your C/C++ codes in ReacJs).
 
 ## **Use with React**
+
+### Run React magic command
+
+**OR**
+
+### Run React commands in order and one by one
+
+## React magic command
+
+  ```
+  > npx create-webassembly-app start-react appName fileName optLevel sourcePath filesExtension
+  ```
+
+- fileName : the name of wasm file that will be created after building
+
+- optLevel (optimization level) **SHOULD** be one of these:
+  - none
+  - slight
+  - aggressive
+
+- sourcePath (The path of the folder which will contain your code files)
+  DEFAULT is source and if you want to use another name then change the folder name in the directory too
+
+- filesExtension (the extension of code files, like c for C programming language)
+
+    **Example command:**
+
+    ```
+    > create-webassembly-app start-react wasm-react add none ./source/ c
+    ```
+
+## React commands
 
 ### 1. Create a React project
 
@@ -92,6 +123,7 @@ Prefix commands with npx
   ```
   > npx create-webassembly-app build-react fileName optLevel sourcePath filesExtension 
   ```
+
 - fileName : the name of wasm file that will be created after building
 
 - optLevel (optimization level) **SHOULD** be one of these:
@@ -118,7 +150,7 @@ Prefix commands with npx
   > npx create-webassembly-app gen-wat fileName
   ```
 
-  - fileName : the name of wasm file that is created through building step
+- fileName : the name of wasm file that is created through building step
 
 ### 7. Navigate to the project root directory & Run the React app
 
@@ -130,7 +162,51 @@ Prefix commands with npx
   > npm start
  ```
 
-## **How to use**
+## React example code
+No need to copy and paste after doing one of React commands (React magic command OR React commands) App.js will contain these codes :
+  ```js
+  import { useState } from "react";
+
+import useWasm from "./wasm/use-wasm";
+
+function App() {
+    const wasm = useWasm("add"); // useWasm argument "add" is the name of wasm file inside ./src/wasm/build
+    const [sum, setSum] = useState("?");
+    const [numberOne, setNumberOne] = useState(0);
+    const [numberTwo, setNumberTwo] = useState(0);
+
+    const setNumber = (e, num) => {
+      if (num === "one") {
+        setNumberOne(e.target.value);
+      } else {
+        setNumberTwo(e.target.value);
+      }
+    };
+
+    const doAddition = () => {
+      setSum(wasm?.add(numberOne, numberTwo));
+    };
+
+    return (
+      <div className="App">
+        <div>
+          <input value={numberOne} type="number" onChange={(e) => setNumber(e, "one")} />
+          <span> + </span>
+          <input value={numberTwo} type="number" onChange={(e) => setNumber(e, "two")} />
+          <span onClick={doAddition}>
+            =
+          </span>
+          <span>{sum}</span>
+        </div>
+      </div>
+    );
+}
+
+export default App;
+
+  ```
+
+## **How to use in general**
 
 ### 1. Create a project
 
