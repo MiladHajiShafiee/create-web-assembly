@@ -15,7 +15,11 @@
     "WebAssembly",
     "webassembly",
     "create-webassembly-app",
-    "assemblyscript"
+    "assemblyscript",
+    "ReactWebAssembly",
+    "create-react-app",
+    "react-webassembly",
+    "webassembly-react"
   ],
   "author": "Milad HajiShafiei",
   "license": "ISC",
