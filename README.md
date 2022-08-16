@@ -6,29 +6,28 @@
 
 You should have **[Emscripten](https://emscripten.org/docs/getting_started/downloads.html), [WABT](https://github.com/WebAssembly/wabt), [Node js](https://nodejs.org/en/) and [Make]()** installed on your machine, you can find installations guide for mac below :
 
-
 ## **Mac prerequisite installations with Homebrew**
 
   If Homebrew is NOT installed you can install from here :
 
  ```js
-  > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 ```
- > brew install emscripten
+ brew install emscripten
 ```
 
 ```
- > brew install wabt
+ brew install wabt
 ```
 
 ```
- > brew install node
+ brew install node
 ```
 
 ```
- > brew install make
+ brew install make
 ```
 
 ## **Installation**
@@ -38,6 +37,7 @@ You should have **[Emscripten](https://emscripten.org/docs/getting_started/downl
 ```
 
 ### OR
+
 Prefix commands with npx
 
 ## **Package introduction**
@@ -46,85 +46,104 @@ Prefix commands with npx
 - **build** folder will contain **.wasm, .wat, .html**  and **.js** files after starting or [build + gen-wat] (In ReactJs case it won't contain html file).
 - **server.js** will serve **index.html** on port **3000** (Doesn't exist in ReactJs case, because create-react-app will run the app on port 3000 automatically)
 - **makefile** will build **C/C++** files (with **emcc/em++**)
-- **app-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below (Doesn't exist in ReacJs case, a hook will handle it in ReacJs):
+- **loader-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below (Doesn't exist in ReacJs case, a hook will handle it in ReacJs):
 
   ```javascript
-  import Functions from "/app-browser.js"
+  import Functions from "/loader-browser.js"
   ```
 
-- **app-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file, Doesn't exist in ReacJs case, a hook will handle it in ReacJs) :
+- **loader-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file, Doesn't exist in ReacJs case, a hook will handle it in ReacJs) :
 
   ```javascript
-  import Functions from "/app-node.js"
+  import Functions from "/loader-node.js"
   ```
+  
+- **js-helper-browser.js** exported javascript functions for working with memory.
 
-- **example.js** you can import **app-node.js** in this file and use **C/C++** codes which are written in **source** folder (Doesn't exist in ReacJs case, by importing a hook you can use your C/C++ codes in ReacJs).
+- **js-helper-node.js** exported javascript functions for working with memory.
+
+- **js-helper.js** exported javascript functions for working with memory in **React** projects.
+
+- **project.config.json** a json file that contains wasmFileName, memoryInitial, memoryMaximum that you can configure those with desired values (take a look at config commands).
+
+- **example.js** you can import **loader-node.js** in this file and use **C/C++** codes which are written in **source** folder (Doesn't exist in ReacJs case, by importing a hook you can use your C/C++ codes in ReacJs).
 
 ## **Use with React**
-
-### Run React magic command
-
-**OR**
-
-### Run React commands in order and one by one
-
-## React magic command
-
-  ```
-  > npx create-webassembly-app start-react appName fileName optLevel sourcePath filesExtension
-  ```
-
-- fileName : the name of wasm file that will be created after building
-
-- optLevel (optimization level) **SHOULD** be one of these:
-  - none
-  - slight
-  - aggressive
-
-- sourcePath (The path of the folder which will contain your code files)
-  DEFAULT is source and if you want to use another name then change the folder name in the directory too
-
-- filesExtension (the extension of code files, like c for C programming language)
-
-    **Example command:**
-
-    ```
-    > create-webassembly-app start-react wasm-react add none ./source/ c
-    ```
-
-## React commands
 
 ### 1. Create a React project
 
   ```
-  > npx create-react-app appName
+  npx create-react-app appName
   ```
 
 ### 2. Navigate to the project directory
 
   ```
-  > cd appName
+  cd appName
   ```
 
-### 3. Initiate requirements: ( warning: This command will replace App.css and App.js with new ones )
+### 3. In this step Run React magic command **OR** Run React commands in order and one by one
+
+## React magic command
 
   ```
-  > npx create-webassembly-app init-react
+  npx create-webassembly-app start-react wasmFileName memoryInitial memoryMaximum optLevel sourcePath filesExtension
   ```
 
-### 4. Navigate to the wasm folder
+- wasmFileName : the name of wasm file that will be created after building
+
+- memoryInitial : WebAssembly Memory instance with an initial size of memoryInitial pages.
+
+- memoryMaximum : WebAssembly Memory instance with a maximum size of memoryMaximum pages.
+
+- optLevel (optimization level) **SHOULD** be one of these:
+  - none
+  - slight
+  - aggressive
+
+- sourcePath (The path of the folder which will contain your code files)
+  DEFAULT is source and if you want to use another name then change the folder name in the directory too
+
+- filesExtension (the extension of code files, like c for C programming language)
+
+    **Example command:**
+
+    ```js
+    npx create-webassembly-app start-react test 256 512 none ./source/ c
+    ```
+
+## React commands
+
+### 1. Initiate requirements: ( warning: This command will replace App.css and App.js with new ones )
 
   ```
-  > cd ./src/wasm
+  npx create-webassembly-app init-react
   ```
 
-### 5. Build C/C++ files to the build folder
+### 2. Configure project.config.json
 
   ```
-  > npx create-webassembly-app build-react fileName optLevel sourcePath filesExtension 
+  npx create-webassembly-app config wasmFileName memoryInitial memoryMaximum
   ```
 
-- fileName : the name of wasm file that will be created after building
+  Example command:
+  ```js
+  npx create-webassembly-app config test 256 512
+  ```
+
+### 3. Navigate to the wasm folder
+
+  ```
+  cd ./src/wasm
+  ```
+
+### 4. Build C/C++ files to the build folder
+
+  ```
+  npx create-webassembly-app build-react wasmFileName optLevel sourcePath filesExtension 
+  ```
+
+- wasmFileName : the name of wasm file that will be created after building
 
 - optLevel (optimization level) **SHOULD** be one of these:
   - none
@@ -139,70 +158,102 @@ Prefix commands with npx
     **Example command:**
 
     ```
-    > npx create-webassembly-app build-react add none ./source/ c
+    npx create-webassembly-app build-react test none ./source/ c
     ```
 
-### 6. Generate wat file : (generates .wat file from .wasm file)
+### 5. Generate wat file : (generates .wat file from .wasm file)
 
   **wat** file is not necessary for this project just it is the text format of **wasm** file binary format
 
   ```
-  > npx create-webassembly-app gen-wat fileName
+  npx create-webassembly-app gen-wat wasFileName
   ```
 
 - fileName : the name of wasm file that is created through building step
 
-### 7. Navigate to the project root directory & Run the React app
+### 6. Navigate to the project root directory & Run the React app
 
  ```
-  > cd ../../
+  cd ../../
  ```
 
  ```
-  > npm start
+  npm start
  ```
 
 ## React example code
+
 No need to copy and paste after doing one of React commands (React magic command OR React commands) App.js will contain these codes :
+
   ```js
-  import { useState } from "react";
+    import { useState } from "react";
 
-import useWasm from "./wasm/use-wasm";
+    import "./App.css";
+    import useWasm from "./wasm/use-wasm";
+    import { encodeArray, decodeString } from "./js-helpers";
 
-function App() {
-    const wasm = useWasm("add"); // useWasm argument "add" is the name of wasm file inside ./src/wasm/build
-    const [sum, setSum] = useState("?");
-    const [numberOne, setNumberOne] = useState(0);
-    const [numberTwo, setNumberTwo] = useState(0);
+    function App() {
+      const wasm = useWasm();
+      const [sum, setSum] = useState("?");
+      const [numberOne, setNumberOne] = useState(0);
+      const [numberTwo, setNumberTwo] = useState(0);
+      const [description, setDescription] = useState("");
+      const [sumOfPassedArray, setSumOfPassedArray] = useState(0);
 
-    const setNumber = (e, num) => {
-      if (num === "one") {
-        setNumberOne(e.target.value);
-      } else {
-        setNumberTwo(e.target.value);
-      }
-    };
+      useEffect(() => {
+        const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const ptr = encodeArray(arr, arr.length, 4, wasm?.memory);
+        const sum = wasm?.accumulate(ptr, arr.length);
+        setSumOfPassedArray(sum);
+        wasm?.wasmfree(ptr);
 
-    const doAddition = () => {
-      setSum(wasm?.add(numberOne, numberTwo));
-    };
+        const str = decodeString(exports.getString(), wasm?.memory);
+        setDescription(str);
+      }, [wasm]);
 
-    return (
-      <div className="App">
-        <div>
-          <input value={numberOne} type="number" onChange={(e) => setNumber(e, "one")} />
-          <span> + </span>
-          <input value={numberTwo} type="number" onChange={(e) => setNumber(e, "two")} />
-          <span onClick={doAddition}>
-            =
-          </span>
-          <span>{sum}</span>
+      const setNumber = (e, num) => {
+        if (num === "one") {
+          setNumberOne(e.target.value);
+        } else {
+          setNumberTwo(e.target.value);
+        }
+      };
+
+      const doAddition = () => {
+        setSum(wasm?.add(numberOne, numberTwo));
+      };
+
+      console.log(numberOne, " + ", numberTwo, " = ", sum);
+
+      return (
+        <div className="App">
+          <div className="text">
+            <h1 className="title">WebAssembly with React</h1>
+            <h1 className="desc">{description}</h1>
+            <p className="desc">Sum of passed array: {sumOfPassedArray}</p>
+          </div>
+          <a
+            target="_blank"
+            className="docs"
+            rel="noreferrer"
+            href="https://www.npmjs.com/package/create-webassembly-app"
+          >
+            DOCUMENTATION
+          </a>
+          <div className="math-section">
+            <input value={numberOne} type="number" id="a" onChange={(e) => setNumber(e, "one")} />
+            <span className="math-sign"> + </span>
+            <input value={numberTwo} type="number" id="b" onChange={(e) => setNumber(e, "two")} />
+            <span className="math-sign" id="btn" onClick={doAddition}>
+              =
+            </span>
+            <span id="res">{sum}</span>
+          </div>
         </div>
-      </div>
-    );
-}
+      );
+    }
 
-export default App;
+    export default App;
 
   ```
 
@@ -211,13 +262,13 @@ export default App;
 ### 1. Create a project
 
   ```
-  > npx create-webassembly-app init appName
+  npx create-webassembly-app init appName
   ```
 
 ### 2. Navigate to the project directory
 
   ```
-  > cd appName
+  cd appName
   ```
 
 ### 3. In this step You should run below **commands** one by one and in order **OR** run the  Magic command
@@ -226,12 +277,25 @@ export default App;
 
 You should run these **commands** one by one and in order or run the **Magic command** after creating a new project
 
-### 1. Build : (builds C/C++ files and generate .wasm and .js files)
+### 1. Configure project.config.json
 
   ```
-  > npx create-webassembly-app build appName optLevel sourcePath filesExtension
+  npx create-webassembly-app config wasmFileName memoryInitial memoryMaximum
   ```
 
+  Example command:
+  ```js
+  npx create-webassembly-app config test 256 512
+  ```
+
+### 2. Build : (builds C/C++ files and generate .wasm and .js files)
+
+  ```
+  npx create-webassembly-app build wasmFileName optLevel sourcePath filesExtension
+  ```
+
+- wasmFileName : the name of wasm file that will be created after building
+  
 - optLevel (optimization level) **SHOULD** be one of these:
   - none
   - slight
@@ -245,7 +309,7 @@ You should run these **commands** one by one and in order or run the **Magic com
     **Example command:**
 
     ```
-    > npx create-webassembly-app build myApp none ./source/ c
+    npx create-webassembly-app build test none ./source/ c
     ```
 
     Another example with different sourth folder name
@@ -253,42 +317,51 @@ You should run these **commands** one by one and in order or run the **Magic com
     **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory
 
     ```
-    > npx create-webassembly-app build myApp none ./src/ c
+    npx create-webassembly-app build wasmFileName none ./src/ c
     ```
 
-### 2. Generate wat file : (generates .wat file from .wasm file)
+### 3. Generate wat file : (generates .wat file from .wasm file)
 
   **wat** file is not necessary for this project just it is the text format of **wasm** file binary format
 
   ```
-  > npx create-webassembly-app gen-wat appName
+  npx create-webassembly-app gen-wat wasmFileName
   ```
 
-### 3. Run example (runs the codes inside example.js file)
+### 4. Run example (runs the codes inside example.js file)
 
   For test:
+
   ```
-  > npx create-webassembly-app run-js appName
+  npx create-webassembly-app run-js
   ```
+
   Show result:
-  ```
-  > node example.js appName
+
+  ```js
+  node example.js
   ```
 
-### 4. Running server (serves index.html on port 3000)
+### 5. Running server (serves index.html on port 3000)
 
   ```
-  > npx create-webassembly-app server
+  npx create-webassembly-app server
   ```
 
 ## **Magic Command**
 
-  run all the below commands at the same time
+  Run all the above commands at the same time
 
   ```
-  > npx create-webassembly-app start appName optLevel sourcePath filesExtension
+  npx create-webassembly-app start wasmFileName memoryInitial memoryMaximum optLevel sourcePath filesExtension
   ```
 
+- wasmFileName : the name of wasm file that will be created after building
+  
+- memoryInitial : WebAssembly Memory instance with an initial size of memoryInitial pages.
+
+- memoryMaximum : WebAssembly Memory instance with a maximum size of memoryMaximum pages.
+  
 - optLevel (optimization level) **SHOULD** be one of these:
   - none
   - slight
@@ -301,14 +374,14 @@ You should run these **commands** one by one and in order or run the **Magic com
 
     Example command:
 
-    ```
-    > npx create-webassembly-app start myApp none ./source/ c
+    ```js
+    npx create-webassembly-app start test 256 512 none ./source/ c
     ```
 
     Another example with different sourth folder name
 
     **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory
 
-    ```
-    > npx create-webassembly-app start myApp none ./src/ c
+    ```js
+    npx create-webassembly-app start test 256 512 none ./src/ c
     ```

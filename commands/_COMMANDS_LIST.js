@@ -54,4 +54,9 @@ export const commands = [
     name: "help",
     desc: "This command will list all other commands\n",
   },
+  {
+    id: "12",
+    name: "config",
+    desc: "This command will configure wasmFileName, memoryInitial, and memoryMaximum\n",
+  },
 ];

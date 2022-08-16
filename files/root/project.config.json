@@ -1,0 +1,5 @@
+{
+  "wasmFileName": "",
+  "memoryInitial": 256,
+  "memoryMaximum": 512
+}

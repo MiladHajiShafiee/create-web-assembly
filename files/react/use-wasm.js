@@ -1,20 +1,32 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import projectConfigJson from "../project.config.json";
 
-const useWasm = (wasmFileName) => {
+const initial = projectConfigJson.memoryInitial;
+const maximum = projectConfigJson.memoryMaximum;
+const wasmFilePath = require(`./build/${projectConfigJson.wasmFileName}.wasm`);
+
+const useWasm = () => {
   const [wasm, setWasm] = useState(null);
-  const wasmFilePath = useMemo(() => require(`./build/${wasmFileName}.wasm`), [wasmFileName]);
 
   const readWasmFile = useCallback(async () => {
     try {
       const response = await fetch(wasmFilePath);
       const buffer = await response.arrayBuffer();
-      const result = await WebAssembly.instantiate(buffer);
+      let memory = new WebAssembly.Memory({ initial, maximum });
+      const result = await WebAssembly.instantiate(buffer, {
+        js: {
+          mem: memory,
+        },
+        env: {
+          emscripten_resize_heap: memory.grow,
+        },
+      });
       const exports = result.instance.exports;
       setWasm(exports);
     } catch (error) {
       console.log(error);
     }
-  }, [wasmFilePath]);
+  }, []);
 
   useEffect(() => {
     readWasmFile();

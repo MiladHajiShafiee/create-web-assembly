@@ -1,7 +1,7 @@
 import { runProCommand } from "../utils/index.js";
 
-function runJs(projectName) {
-  const command = `node example.js ${projectName}`;
+function runJs() {
+  const command = "node example.js";
   runProCommand(command);
 }
 

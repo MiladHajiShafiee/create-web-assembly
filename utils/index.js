@@ -4,6 +4,8 @@ import path from "path";
 import chalk from "chalk";
 import { execSync, spawnSync } from "child_process";
 
+import jsonFile from "../files/root/project.config.json" assert { type: "json" };
+
 const actionHeaders = [
   " -------------------------------- ⚙️  INITIATING THE PROJECT ⚙️  -------------------------------- :",
   " ------------------------------ ➕  CREATING REQUIRED FOLDERS ➕  ------------------------------ :",
@@ -107,6 +109,35 @@ const installModule = (module, index, isLast, projectName) => {
     console.log(
       "-------------------------------------------------------------------------------------------------\n"
     );
+  }
+};
+
+// ------------------------------ CONFIGURE PROJECT CONFIG JSON ------------------------------ :
+export const configProjectJson = (wasmFileName, memoryInitial, memoryMaximum) => {
+  const jsonFilePath = "./project.config.json";
+
+  jsonFile.wasmFileName = wasmFileName;
+  jsonFile.memoryInitial = parseInt(memoryInitial, 10);
+  jsonFile.memoryMaximum = parseInt(memoryMaximum, 10);
+
+  try {
+    if (fs.existsSync(jsonFilePath)) {
+      fs.writeFileSync(jsonFilePath, JSON.stringify(jsonFile));
+      console.log(
+        `\n✅  ${chalk
+          .hex("#FFA500")
+          .bold(`${jsonFilePath} configured ${chalk.green.bold("successfully")}`)}\n`
+      );
+    } else if (fs.existsSync("./src/project.config.json")) {
+      fs.writeFileSync("./src/project.config.json", JSON.stringify(jsonFile));
+      console.log(
+        `\n✅  ${chalk
+          .hex("#FFA500")
+          .bold(`${jsonFilePath} configured ${chalk.green.bold("successfully")}`)}\n`
+      );
+    }
+  } catch (error) {
+    console.log(chalk.red.bold(`❌ ${error} \n`));
   }
 };
 
@@ -320,30 +351,60 @@ export const initiatingProject = (projectName, callback) => {
     },
     {
       id: "8",
+      destinationFileDir: `./${projectName}/js-helpers-browser.js`,
+      // sourceDir: `../create-webassembly-app/files/root/js-helpers-browser.js`,
+      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/js-helpers-browser.js`,
+    },
+    {
+      id: "9",
+      destinationFileDir: `./${projectName}/js-helpers-node.js`,
+      // sourceDir: `../create-webassembly-app/files/root/js-helpers-node.js`,
+      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/js-helpers-node.js`,
+    },
+    {
+      id: "10",
+      destinationFileDir: `./${projectName}/loader-browser.js`,
+      // sourceDir: `../create-webassembly-app/files/root/loader-browser.js`,
+      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/loader-browser.js`,
+    },
+    {
+      id: "11",
+      destinationFileDir: `./${projectName}/loader-node.js`,
+      // sourceDir: `../create-webassembly-app/files/root/loader-node.js`,
+      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/loader-node.js`,
+    },
+    {
+      id: "12",
+      destinationFileDir: `./${projectName}/project.config.json`,
+      // sourceDir: `../create-webassembly-app/files/root/project.config.json`,
+      sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/root/project.config.json`,
+    },
+    {
+      id: "13",
       destinationFileDir: `./${projectName}/source/main.c`,
       // sourceDir: `../create-webassembly-app/files/source/main.c`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/main.c`,
     },
     {
-      id: "9",
+      id: "14",
       destinationFileDir: `./${projectName}/source/add/add.c`,
       // sourceDir: `../create-webassembly-app/files/source/add/add.c`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/add/add.c`,
     },
     {
-      id: "10",
+      id: "15",
       destinationFileDir: `./${projectName}/source/add/add.h`,
       // sourceDir: `../create-webassembly-app/files/source/add/add.h`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/add/add.h`,
     },
     {
-      id: "11",
+      id: "16",
       destinationFileDir: `./${projectName}/source/subtract/subtract.c`,
       // sourceDir: `../create-webassembly-app/files/source/subtract/subtract.c`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/subtract/subtract.c`,
     },
     {
-      id: "12",
+      id: "17",
       destinationFileDir: `./${projectName}/source/subtract/subtract.h`,
       // sourceDir: `../create-webassembly-app/files/source/subtract/subtract.h`,
       sourceDir: `./${projectName}/node_modules/create-webassembly-app/files/source/subtract/subtract.h`,
@@ -408,41 +469,51 @@ export const initiateReactProject = (callback) => {
     },
     {
       id: "4",
+      destinationFileDir: "./src/wasm/js-helpers.js",
+      // sourceDir: "../create-webassembly-app/files/react/js-helpers.js",
+      sourceDir: "./node_modules/create-webassembly-app/files/react/js-helpers.js",
+    },
+    {
+      id: "5",
+      destinationFileDir: `./src/project.config.json`,
+      // sourceDir: "../create-webassembly-app/files/root/project.config.json",
+      sourceDir: `./node_modules/create-webassembly-app/files/root/project.config.json`,
+    },
+    {
+      id: "6",
       destinationFileDir: "./src/wasm/makefile",
       // sourceDir: "../create-webassembly-app/files/react/makefile",
       sourceDir: "./node_modules/create-webassembly-app/files/react/makefile",
     },
     {
-      id: "5",
-      destinationFileDir: "./src/wasm/source/main.c",
-      // sourceDir: "../create-webassembly-app/files/react/wasm/source/main.c",
-      sourceDir: "./node_modules/create-webassembly-app/files/react/wasm/source/main.c",
-    },
-    {
-      id: "6",
-      destinationFileDir: "./src/wasm/source/add/add.c",
-      // sourceDir: "../create-webassembly-app/files/react/wasm/source/add/add.c",
-      sourceDir: "./node_modules/create-webassembly-app/files/react/wasm/source/add/add.c",
-    },
-    {
       id: "7",
-      destinationFileDir: "./src/wasm/source/add/add.h",
-      // sourceDir: "../create-webassembly-app/files/react/wasm/source/add/add.h",
-      sourceDir: "./node_modules/create-webassembly-app/files/react/wasm/source/add/add.h",
+      destinationFileDir: "./src/wasm/source/main.c",
+      // sourceDir: "../create-webassembly-app/files/source/main.c",
+      sourceDir: "./node_modules/create-webassembly-app/files/source/main.c",
     },
     {
       id: "8",
-      destinationFileDir: "./src/wasm/source/subtract/subtract.c",
-      // sourceDir: "../create-webassembly-app/files/react/wasm/source/subtract/subtract.c",
-      sourceDir:
-        "./node_modules/create-webassembly-app/files/react/wasm/source/subtract/subtract.c",
+      destinationFileDir: "./src/wasm/source/add/add.c",
+      // sourceDir: "../create-webassembly-app/files/source/add/add.c",
+      sourceDir: "./node_modules/create-webassembly-app/files/source/add/add.c",
     },
     {
       id: "9",
+      destinationFileDir: "./src/wasm/source/add/add.h",
+      // sourceDir: "../create-webassembly-app/files/source/add/add.h",
+      sourceDir: "./node_modules/create-webassembly-app/files/source/add/add.h",
+    },
+    {
+      id: "10",
+      destinationFileDir: "./src/wasm/source/subtract/subtract.c",
+      // sourceDir: "../create-webassembly-app/files/source/subtract/subtract.c",
+      sourceDir: "./node_modules/create-webassembly-app/files/source/subtract/subtract.c",
+    },
+    {
+      id: "11",
       destinationFileDir: "./src/wasm/source/subtract/subtract.h",
-      // sourceDir: "../create-webassembly-app/files/react/wasm/source/subtract/subtract.h",
-      sourceDir:
-        "./node_modules/create-webassembly-app/files/react/wasm/source/subtract/subtract.h",
+      // sourceDir: "../create-webassembly-app/files/source/subtract/subtract.h",
+      sourceDir: "./node_modules/create-webassembly-app/files/source/subtract/subtract.h",
     },
   ];
 

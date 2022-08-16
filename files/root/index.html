@@ -10,16 +10,28 @@
   <body>
     <div class="text">
       <h1 class="title">WebAssembly</h1>
-      <h1 class="desc">
-        Code in other programming languages and run in Javascript with WebAssembly
-      </h1>
+      <h1 class="desc" id="desc"></h1>
+      <h3 class="desc" id="sum-of-array"></h3>
     </div>
     <a href="https://www.npmjs.com/package/create-webassembly-app" target="_blank" class="docs"
       >DOCUMENTATION</a
     >
 
     <script type="module">
-      import Functions from "/app-browser.js";
+      import exports from "/loader-browser.js";
+      import { encodeArray, decodeString } from "./js-helpers-browser.js";
+
+      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const ptr = encodeArray(arr, arr.length, 4);
+      const sumOfArrayEls = exports.accumulate(ptr, arr.length);
+      exports.wasmfree(ptr);
+      const str = decodeString(exports.getString());
+      console.log(`[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sumOfArrayEls}`);
+      console.log(str);
+      document.getElementById("desc").innerHTML = `${str}`;
+      document.getElementById(
+        "sum-of-array"
+      ).innerHTML = `[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sumOfArrayEls}`;
 
       const btn = document.getElementById("btn");
       btn.addEventListener(
@@ -27,9 +39,9 @@
         function () {
           const a = document.querySelector("#a").value;
           const b = document.querySelector("#b").value;
-          const sum = Functions.add(a, b);
+          const sum = exports.add(a, b);
           document.querySelector("#res").innerHTML = `${sum}`;
-          console.log(sum);
+          console.log(a, " + ", b, " = ", sum);
         },
         false
       );

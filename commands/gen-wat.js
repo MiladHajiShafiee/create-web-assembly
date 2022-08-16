@@ -1,7 +1,7 @@
 import { runProCommand } from "../utils/index.js";
 
-function genWat(projectName) {
-  const command = `wasm2wat ./build/${projectName}.wasm -o ./build/${projectName}.wat`;
+function genWat(wasmFileName) {
+  const command = `wasm2wat ./build/${wasmFileName}.wasm -o ./build/${wasmFileName}.wat`;
   runProCommand(command);
 }
 

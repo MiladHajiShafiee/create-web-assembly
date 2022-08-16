@@ -1,13 +1,20 @@
-import { runProCommand } from "../utils/index.js";
+import { configProjectJson, runProCommand } from "../utils/index.js";
 
-function startReact(projectName, fileName, optLevel, sourcePath, filesExtension) {
-  runProCommand(`npx create-react-app ${projectName}`);
-  runProCommand(`cd ${projectName} && npx create-webassembly-app init-react`);
+function startReact(
+  wasmFileName,
+  memoryInitial,
+  memoryMaximum,
+  optLevel,
+  sourcePath,
+  filesExtension
+) {
+  runProCommand(`npx create-webassembly-app init-react`);
   runProCommand(
-    `cd ${projectName}/src/wasm && npx create-webassembly-app build-react ${fileName} ${optLevel} ${sourcePath} ${filesExtension}`
+    `cd ./src/wasm && npx create-webassembly-app build-react ${wasmFileName} ${optLevel} ${sourcePath} ${filesExtension}`
   );
-  runProCommand(`cd ${projectName}/src/wasm && npx create-webassembly-app gen-wat ${fileName}`);
-  runProCommand(`cd ${projectName} && npm start`);
+  configProjectJson(wasmFileName, memoryInitial, memoryMaximum);
+  runProCommand(`cd ./src/wasm && npx create-webassembly-app gen-wat ${wasmFileName}`);
+  runProCommand(`npm start`);
 }
 
 export default startReact;
