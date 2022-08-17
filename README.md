@@ -141,7 +141,7 @@ npx create-webassembly-app config test 256 512
     **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory if you changed **source** to **src** or other name
 
     ```
-    npx create-webassembly-app build wasmFileName none ./src/ c
+    npx create-webassembly-app build test none ./src/ c
     ```
 
 ### 3. Generate wat file (optional) : generates .wat file from .wasm file
@@ -207,7 +207,7 @@ npx create-webassembly-app config test 256 512
   **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory if you changed **source** to **src** or other name
 
   ```
-  npx create-webassembly-app build wasmFileName none ./src/ c
+  npx create-webassembly-app build test none ./src/ c
   ```
 
 ## **Use with React**
