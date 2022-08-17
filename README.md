@@ -44,36 +44,38 @@ npx create-webassembly-app list
 ```
 
 ## **Package introduction**
-
-- **source** folder contains **C/C++** files and their **headers** (You can also make other nested folders inside source folder they will be added to the makefile automatically).
-- **build** folder will contain **.wasm, .wat, .html**  and **.js** files after running **start** command or **build** && **gen-wat** commands (In ReactJs case it won't contain html file).
-- **server.js** will serve **index.html** on port **3000** (Doesn't exist in ReactJs case, because create-react-app will run the app on port 3000 automatically)
-- **makefile** will build **C/C++** files (with **emcc/em++**)
-- **loader-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below (Doesn't exist in ReacJs case, a hook will handle it in ReacJs):
+![create-webassembly-app_folder-guide](https://user-images.githubusercontent.com/54850998/185022813-99a5b105-f26b-4c96-baa2-8b3077b63e1c.svg)
+- 1.**source** folder contains **C/C++** files and their **headers** (You can also make other nested folders inside source folder they will be added to the makefile automatically).
+- 2.**build** folder will contain **.wasm, .wat, .html**  and **.js** files after running **start** command or **build** && **gen-wat** commands (In ReactJs case it won't contain html file).
+- 3.**server.js** will serve **index.html** on port **3000** (Doesn't exist in ReactJs case, because create-react-app will run the app on port 3000 automatically)
+- 4.**makefile** will build **C/C++** files (with **emcc/em++**)
+- 5.**loader-browser.js** will instantiate the generated **wasm** file that you can use in your **index.html** by importing it in script tag like below (Doesn't exist in ReacJs case, a hook will handle it in ReacJs):
 
   ```javascript
   import exports from "/loader-browser.js"
   ```
 
-- **loader-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file, Doesn't exist in ReacJs case, a hook will handle it in ReacJs) :
+- 6.**loader-node.js** will instantiate the generated **wasm** file that you can use in your **JS** files by importing it like below (take a look at example.js file, Doesn't exist in ReacJs case, a hook will handle it in ReacJs) :
 
   ```javascript
   import exports from "/loader-node.js"
   ```
   
-- **js-helper-browser.js** : exported javascript functions for working with memory.
+- 7.**js-helper-browser.js** : exported javascript functions for working with memory.
 
-- **js-helper-node.js** : exported javascript functions for working with memory.
+- 8.**js-helper-node.js** : exported javascript functions for working with memory.
 
-- **js-helper.js** : exported javascript functions for working with memory in **React** projects.
+- 9.**js-helper.js** : exported javascript functions for working with memory in **React** projects.
 
-- **project.config.json** a json file that contains wasmFileName, memoryInitial, memoryMaximum values that you can configure those with desired values (take a look at config command).
+- 10.**project.config.json** a json file that contains wasmFileName, memoryInitial, memoryMaximum values that you can configure those with desired values (take a look at config command).
 
-- **example.js** you can import **loader-node.js** in this file and use **C/C++** codes which are written in **source** folder (Doesn't exist in ReacJs case, by importing a hook you can use your C/C++ codes in ReacJs).
+- 11.**example.js** you can import **loader-node.js** in this file and use **C/C++** codes which are written in **source** folder (Doesn't exist in ReacJs case, by importing a hook you can use your C/C++ codes in ReacJs).
 
-- **index.js & index.css** : start point of application in bare case.
+- 12.**index.js & index.css** : start point of application in bare case.
 
-- **App.js & App.css** : start point of application in ReactJs case.
+- 13.**App.js & App.css** : start point of application in ReactJs case.
+
+- 14.**use-wat.js** : custom hook that will load and instantiate wasm file
 
 ## **Use in general**
 
