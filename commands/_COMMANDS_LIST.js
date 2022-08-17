@@ -37,7 +37,7 @@ export const commands = [
   {
     id: "8",
     name: "init-react",
-    desc: "This command will setup requirements inside react app",
+    desc: "This command will setup requirements inside react app\n",
   },
   {
     id: "9",
