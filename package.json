@@ -1,6 +1,6 @@
 {
   "name": "create-webassembly-app",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "type": "module",
   "description": "Create app in C/C++ (C++ coming soon) and run it in JS with webassembly",
   "main": "index.js",
