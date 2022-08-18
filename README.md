@@ -397,7 +397,6 @@ No need to copy and paste, After doing one of magic command **OR** commands, ind
   </body>
 </html>
 
-
 ```
 
 ## React example code
@@ -416,8 +415,36 @@ function App() {
   const [sum, setSum] = useState("?");
   const [numberOne, setNumberOne] = useState(0);
   const [numberTwo, setNumberTwo] = useState(0);
+  const [randString, setRandString] = useState("");
   const [description, setDescription] = useState("");
-  const [sumOfPassedArray, setSumOfPassedArray] = useState();
+  const [sumOfPassedArray, setSumOfPassedArray] = useState(null);
+
+  const buffer = wasm?.memory?.buffer;
+
+  const showDescription = () => {
+    const str = decodeString(wasm?.getString(), buffer);
+    console.log(str);
+    setDescription(str);
+  };
+
+  const showSumOfPassedArray = () => {
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const ptr = encodeArray(arr, arr.length, 4, wasm);
+    const sum = wasm?.accumulate(ptr, arr.length);
+    console.log(`[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sum}`);
+    setSumOfPassedArray(`[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sum}`);
+    wasm?.wasmfree(ptr);
+  };
+
+  const showRandString = () => {
+    const rndStr = decodeString(wasm?.randString(10), buffer);
+    console.log(`Generated random string : ${rndStr}`);
+    setRandString(`Generated random string : ${rndStr}`);
+  };
+
+  const doAddition = () => {
+    setSum(wasm?.add(numberOne, numberTwo));
+  };
 
   const setNumber = (e, num) => {
     if (num === "one") {
@@ -427,27 +454,25 @@ function App() {
     }
   };
 
-  const doAddition = () => {
-    setSum(wasm?.add(numberOne, numberTwo));
-
-    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const ptr = encodeArray(arr, arr.length, 4, wasm);
-    const sum = wasm?.accumulate(ptr, arr.length);
-    setSumOfPassedArray(`[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sum}`);
-    wasm?.wasmfree(ptr);
-
-    const str = decodeString(wasm?.getString(), wasm?.memory);
-    setDescription(str);
-  };
-
   console.log(numberOne, " + ", numberTwo, " = ", sum);
 
   return (
     <div className="App">
       <div className="text">
         <h1 className="title">WebAssembly with React</h1>
-        <h1 className="desc">{description}</h1>
-        <p className="desc">{sumOfPassedArray}</p>
+        {description ? (
+          <h1 className="desc">{description}</h1>
+        ) : (
+          <p className="desc" style={{ cursor: "pointer" }} onClick={showDescription}>
+            Show description
+          </p>
+        )}
+        <p className="desc" style={{ cursor: "pointer" }} onClick={showSumOfPassedArray}>
+          {sumOfPassedArray ? sumOfPassedArray : "Show sum of passed array"}
+        </p>
+        <p className="desc" style={{ cursor: "pointer" }} onClick={showRandString}>
+          {randString ? randString : "Show random string"}
+        </p>
       </div>
       <a
         target="_blank"
@@ -527,3 +552,6 @@ npx create-webassembly-app gen-wat wasFileName
 ```
 npx create-webassembly-app start-react wasmFileName memoryInitial memoryMaximum optLevel sourcePath filesExtension
 ```
+
+# Extra
+Check [THIS](https://www.youtube.com/watch?v=_8T9T6MQ1fU&list=PLysLvOneEETPM_YbEyZcJ35_3pSdrj33O) awesome YouTube WebAssembly tutorial videos for understanding better the examples inside App.js (in React case) & index.html (in General case)
