@@ -4,6 +4,9 @@
 #include "./add/add.h"
 #include "./subtract/subtract.h"
 
+extern unsigned int curTime();
+extern void logProgress(double progress);
+
 EMSCRIPTEN_KEEPALIVE
 int myFunc(int a, int b)
 {
@@ -19,6 +22,22 @@ int accumulate(int *arr, int n)
     sum += arr[--n];
   }
   return sum;
+}
+
+EMSCRIPTEN_KEEPALIVE
+unsigned char *randString(int len)
+{
+  unsigned char *str = malloc(len + 1);
+  srand(curTime());
+
+  for (int i = 0; i < len; i++)
+  {
+    str[i] = rand() % (127 - 33) + 33;
+    logProgress((double)(i + 1) / (double)len);
+  }
+
+  str[len] = 0;
+  return str;
 }
 
 EMSCRIPTEN_KEEPALIVE

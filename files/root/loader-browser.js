@@ -1,9 +1,10 @@
+import { logProgress } from "./js-helpers-browser.js";
 import projectConfigJson from "./project.config.json" assert { type: "json" };
 
 // Define wasm file directory
-const wasmFilePath = `./build/${projectConfigJson.wasmFileName}.wasm`;
 const initial = projectConfigJson.memoryInitial;
 const maximum = projectConfigJson.memoryMaximum;
+const wasmFilePath = `./build/${projectConfigJson.wasmFileName}.wasm`;
 
 // Define memory
 let memory = new WebAssembly.Memory({ initial, maximum });
@@ -14,6 +15,8 @@ const result = await WebAssembly.instantiateStreaming(fetch(wasmFilePath), {
     mem: memory,
   },
   env: {
+    curTime: () => 100,
+    logProgress: logProgress,
     emscripten_resize_heap: memory.grow,
   },
 });

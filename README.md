@@ -91,7 +91,7 @@ npx create-webassembly-app list
   cd appName
   ```
 
-### 3. In this step You should run **commands** one by one and in order **OR** run  Magic command
+### 3. In this step You should run **Commands** one by one and in order **OR** run  **Magic command**
 
 ## **Commands**
 
@@ -117,6 +117,8 @@ npx create-webassembly-app config test 256 512
   ```
   npx create-webassembly-app build wasmFileName optLevel sourcePath filesExtension
   ```
+
+  ***IGNORE "error: undefined symbol : curTime and logProgress" and continue through steps***
 
 - wasmFileName : the name of wasm file that will be created after building in the build folder
   
@@ -198,16 +200,16 @@ npx create-webassembly-app config test 256 512
 
   **Example :**
 
-  ```
-  npx create-webassembly-app build test none ./source/ c
+  ```js
+  npx create-webassembly-app start test 256 512 none ./source/ c
   ```
 
   Another example with changed source folder name
 
   **IMPORTANT**: You should change **source** folder **name** to **src** in the project directory if you changed **source** to **src** or other name
 
-  ```
-  npx create-webassembly-app build test none ./src/ c
+  ```js
+  npx create-webassembly-app start test 256 512 none ./src/ c
   ```
 
 ## **Use with React**
@@ -224,35 +226,7 @@ npx create-webassembly-app config test 256 512
   cd appName
   ```
 
-### 3. In this step run React magic command **OR** run React commands in order and one by one
-
-## React magic command
-
-  ```
-  npx create-webassembly-app start-react wasmFileName memoryInitial memoryMaximum optLevel sourcePath filesExtension
-  ```
-
-- wasmFileName : the name of wasm file that will be created after building
-
-- memoryInitial : WebAssembly Memory instance with an initial size of memoryInitial pages.
-
-- memoryMaximum : WebAssembly Memory instance with a maximum size of memoryMaximum pages.
-
-- optLevel (optimization level) **SHOULD** be one of these:
-  - none
-  - slight
-  - aggressive
-
-- sourcePath (The path of the folder which will contain your code files)
-  DEFAULT is source and if you want to use another name then change the folder name in the directory too
-
-- filesExtension (the extension of code files, like c for C programming language)
-
-    **Example command:**
-
-    ```js
-    npx create-webassembly-app start-react test 256 512 none ./source/ c
-    ```
+### 3. In this step run **React magic command** **OR** run **React commands** in order and one by one
 
 ## React commands
 
@@ -280,7 +254,7 @@ npx create-webassembly-app config test 256 512
   ```
 
 ### 4. Build C/C++ files to the build folder
-
+IGNORE "error: undefined symbol : curTime and logProgress" and continue through steps
   ```
   npx create-webassembly-app build-react wasmFileName optLevel sourcePath filesExtension 
   ```
@@ -325,18 +299,46 @@ npx create-webassembly-app config test 256 512
   npm start
  ```
 
+## React magic command
+
+  ```
+  npx create-webassembly-app start-react wasmFileName memoryInitial memoryMaximum optLevel sourcePath filesExtension
+  ```
+
+- wasmFileName : the name of wasm file that will be created after building
+
+- memoryInitial : WebAssembly Memory instance with an initial size of memoryInitial pages.
+
+- memoryMaximum : WebAssembly Memory instance with a maximum size of memoryMaximum pages.
+
+- optLevel (optimization level) **SHOULD** be one of these:
+  - none
+  - slight
+  - aggressive
+
+- sourcePath (The path of the folder which will contain your code files)
+  DEFAULT is source and if you want to use another name then change the folder name in the directory too
+
+- filesExtension (the extension of code files, like c for C programming language)
+
+    **Example command:**
+
+    ```js
+    npx create-webassembly-app start-react test 256 512 none ./source/ c
+    ```
+
 ## General example code
 
 No need to copy and paste, After doing one of magic command **OR** commands, index.js will contain these codes :
 
-```js
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create WebAssembly App</title>
+    <title>WebAssembly</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
@@ -344,8 +346,11 @@ No need to copy and paste, After doing one of magic command **OR** commands, ind
       <h1 class="title">WebAssembly</h1>
       <h1 class="desc" id="desc"></h1>
       <h3 class="desc" id="sum-of-array"></h3>
+      <h3 class="desc" id="rand-string"></h3>
     </div>
-    <a href="https://www.npmjs.com/package/create-webassembly-app" target="_blank" class="docs">DOCUMENTATION</a>
+    <a href="https://www.npmjs.com/package/create-webassembly-app" target="_blank" class="docs"
+      >DOCUMENTATION</a
+    >
 
     <script type="module">
       import exports from "/loader-browser.js";
@@ -355,13 +360,18 @@ No need to copy and paste, After doing one of magic command **OR** commands, ind
       const ptr = encodeArray(arr, arr.length, 4);
       const sumOfArrayEls = exports.accumulate(ptr, arr.length);
       exports.wasmfree(ptr);
-      const str = decodeString(exports.getString());
       console.log(`[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sumOfArrayEls}`);
-      console.log(str);
-      document.getElementById("desc").innerHTML = `${str}`;
       document.getElementById(
         "sum-of-array"
       ).innerHTML = `[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sumOfArrayEls}`;
+
+      const str = decodeString(exports.getString());
+      console.log(str);
+      document.getElementById("desc").innerHTML = str;
+
+      const randStr = decodeString(exports.randString(40));
+      console.log(`Generated random string : ${randStr}`);
+      document.getElementById("rand-string").innerHTML += `Generated random string : ${randStr}`;
 
       const btn = document.getElementById("btn");
       btn.addEventListener(
@@ -386,6 +396,7 @@ No need to copy and paste, After doing one of magic command **OR** commands, ind
     </div>
   </body>
 </html>
+
 
 ```
 

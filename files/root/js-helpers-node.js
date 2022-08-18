@@ -35,3 +35,8 @@ export const decodeString = (ptr) => {
 
   return new TextDecoder("utf8").decode(bytes.slice(0, strlen));
 };
+
+// Log progress
+export const logProgress = (proportion) => {
+  console.log(proportion * 100.0);
+};

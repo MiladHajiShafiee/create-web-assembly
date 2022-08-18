@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create WebAssembly App</title>
+    <title>WebAssembly</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
@@ -12,6 +12,7 @@
       <h1 class="title">WebAssembly</h1>
       <h1 class="desc" id="desc"></h1>
       <h3 class="desc" id="sum-of-array"></h3>
+      <h3 class="desc" id="rand-string"></h3>
     </div>
     <a href="https://www.npmjs.com/package/create-webassembly-app" target="_blank" class="docs"
       >DOCUMENTATION</a
@@ -25,13 +26,18 @@
       const ptr = encodeArray(arr, arr.length, 4);
       const sumOfArrayEls = exports.accumulate(ptr, arr.length);
       exports.wasmfree(ptr);
-      const str = decodeString(exports.getString());
       console.log(`[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sumOfArrayEls}`);
-      console.log(str);
-      document.getElementById("desc").innerHTML = `${str}`;
       document.getElementById(
         "sum-of-array"
       ).innerHTML = `[ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 ]  =  ${sumOfArrayEls}`;
+
+      const str = decodeString(exports.getString());
+      console.log(str);
+      document.getElementById("desc").innerHTML = str;
+
+      const randStr = decodeString(exports.randString(40));
+      console.log(`Generated random string : ${randStr}`);
+      document.getElementById("rand-string").innerHTML += `Generated random string : ${randStr}`;
 
       const btn = document.getElementById("btn");
       btn.addEventListener(

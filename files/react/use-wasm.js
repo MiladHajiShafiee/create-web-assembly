@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+
+import { logProgress } from "./js-helpers";
 import projectConfigJson from "../project.config.json";
 
 const initial = projectConfigJson.memoryInitial;
@@ -18,6 +20,8 @@ const useWasm = () => {
           mem: memory,
         },
         env: {
+          curTime: () => 100,
+          logProgress: logProgress,
           emscripten_resize_heap: memory.grow,
         },
       });

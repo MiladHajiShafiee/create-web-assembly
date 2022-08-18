@@ -22,15 +22,20 @@ export const encodeArray = (arr, len, sizeof = 1, wasm) => {
 };
 
 // Decode Array
-export const decodeArray = (ptr, len, memory) => {
-  return new Uint8Array(memory?.buffer).slice(ptr, ptr + len);
+export const decodeArray = (ptr, len, buffer) => {
+  return new Uint8Array(buffer).slice(ptr, ptr + len);
 };
 
 // Decode String override
-export const decodeString = (ptr, memory) => {
-  const bytes = new Uint8Array(memory?.buffer, ptr);
+export const decodeString = (ptr, buffer) => {
+  const bytes = new Uint8Array(buffer, ptr);
   let strlen = 0;
   while (bytes[strlen] !== 0) strlen++;
 
   return new TextDecoder("utf8").decode(bytes.slice(0, strlen));
+};
+
+// Log progress
+export const logProgress = (proportion) => {
+  console.log(proportion * 100.0);
 };
