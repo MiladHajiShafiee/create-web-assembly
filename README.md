@@ -43,6 +43,13 @@ Run this command to see all supported commands :
 npx create-webassembly-app list
 ```
 
+## **Check the version of package on your project**
+Navigate to your project directory and run this command :
+
+```
+npx create-webassembly-app get-version
+```
+
 ## **Package introduction**
 ![create-webassembly-app_folder-guide](https://user-images.githubusercontent.com/54850998/185022813-99a5b105-f26b-4c96-baa2-8b3077b63e1c.svg)
 - 1.**source** folder contains **C/C++** files and their **headers** (You can also make other nested folders inside source folder they will be added to the makefile automatically).
@@ -505,6 +512,10 @@ export default App;
 
 ```
 npx create-webassembly-app list
+```
+
+```
+npx create-webassembly-app get-version
 ```
 
 ```

@@ -54,6 +54,27 @@ export const simpleLogger = (message) => {
   console.log("\n", chalk.white.bold(message), "\n");
 };
 
+// -------------------------------------- GET VERSION --------------------------------------- :
+export const getVersion = async () => {
+  const url = "https://registry.npmjs.org/-/v1/search?text=create-webassembly-app";
+
+  const response = await fetch(url);
+  const responseJson = await response.json();
+  const currentVersion = responseJson.objects[0].package.version;
+
+  try {
+    const installedVersion = execSync("npm view create-webassembly-app version");
+    console.log(
+      `${chalk.yellow.bold(`
+Package last version is : ${currentVersion}
+Package installed version is : ${installedVersion}
+    `)}`
+    );
+  } catch (error) {
+    console.log(`  ❌ ${chalk.red.bold(`exec error: ${error}`)}`);
+  }
+};
+
 // ------------------------------------- CREATE FOLDER -------------------------------------- :
 const createFolder = (folderDir) => {
   try {
